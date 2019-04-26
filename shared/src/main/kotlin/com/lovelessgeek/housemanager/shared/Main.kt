@@ -13,6 +13,14 @@ suspend fun getUserById(id: String): User? {
     return users.find { it.id == id }
 }
 
+suspend fun getTasks(): List<Task> {
+    return tasks
+}
+
+suspend fun getTaskById(id: String): Task? {
+    return tasks.find { it.id == id }
+}
+
 val schema = KGraphQL.schema {
     // Configuration for this getSchema
     configure {
@@ -42,8 +50,14 @@ val schema = KGraphQL.schema {
         suspendResolver { -> getUsers() }
     }
 
+    query("task") {
+        suspendResolver { id: String ->
+            getTaskById(id)
+        }
+    }
+
     query("tasks") {
-        suspendResolver { -> tasks }
+        suspendResolver { -> getTasks() }
     }
 }
 
