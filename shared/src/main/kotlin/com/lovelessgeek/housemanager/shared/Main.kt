@@ -67,25 +67,5 @@ suspend fun main() = coroutineScope {
     println(schema.execute("{ user(id: \"2\") { username } }"))
     println(schema.execute("{ user(username: \"tura\") { username } }"))
     println(schema.execute("{ user(id: \"3\", username: \"tura\") { username } }"))
-    println(schema.execute(askSchema("User")))
-}
-
-private fun askSchema(name: String): String {
-    return """{
-          __type(name: "$name") {
-    name
-    fields {
-      name
-      type {
-        name
-        kind
-        ofType {
-          name
-          kind
-        }
-      }
-    }
-  }
-  }
-    """.trimIndent()
+    println(schema.introspectType("asdf"))
 }

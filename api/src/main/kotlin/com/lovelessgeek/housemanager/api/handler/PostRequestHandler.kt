@@ -20,7 +20,7 @@ class PostRequestHandler :
         val query: String =
             body["query"]?.let(this::parseQuery) ?: return error(
                 422,
-                "query parameter 'query' is missing."
+                "'query' is missing in request body."
             )
         val variables: String? = body["variables"]
 

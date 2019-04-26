@@ -29,6 +29,20 @@ Resources:
       Runtime: "java8"
       Timeout: 40
       MemorySize: 256
+  TypeIntrospection:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: "com.lovelessgeek.housemanager.api.handler.TypeIntrospectionHandler::handleRequest"
+      CodeUri: "./build/libs/api-all.jar"
+      Events:
+        IndexApi:
+          Type: "Api"
+          Properties:
+            Path: "/v1/introspection/type"
+            Method: "get"
+      Runtime: "java8"
+      Timeout: 40
+      MemorySize: 256
 Outputs:
   ProdEndpoint:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

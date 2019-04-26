@@ -1,5 +1,6 @@
 package com.lovelessgeek.housemanager.shared
 
+import com.github.pgutkowski.kgraphql.schema.Schema
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 
@@ -17,3 +18,26 @@ inline fun <reified T> String.fromJson(): T =
 
 inline fun <reified T> String.frmoJsonList(): T =
     gson.fromJson(this, object : TypeToken<T>() {}.type)
+
+fun Schema.introspectType(className: String): String {
+    return execute(
+        """
+{
+  __type(name: "$className") {
+    name
+    fields {
+      name
+      type {
+        name
+        kind
+        ofType {
+          name
+          kind
+        }
+      }
+    }
+  }
+}
+    """.trimIndent()
+    )
+}
