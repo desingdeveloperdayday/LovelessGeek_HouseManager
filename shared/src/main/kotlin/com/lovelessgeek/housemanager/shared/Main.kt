@@ -32,8 +32,9 @@ val schema = KGraphQL.schema {
 
     // Available queries
     query("user") {
-        suspendResolver { id: String ->
-            getUserById(id)
+        suspendResolver { id: String?, username: String? ->
+            // 이렇게 받는게 가능하긴 한데 로직을 잘 구현하는 것이 관건이겠음.
+            users.find { it.id == id || it.username == username }
         }
     }
 
@@ -50,6 +51,8 @@ suspend fun main() = coroutineScope {
     println(schema.execute("{ users { id } }"))
     println(schema.execute("{ users { id username tasks { type name } } }"))
     println(schema.execute("{ user(id: \"2\") { username } }"))
+    println(schema.execute("{ user(username: \"tura\") { username } }"))
+    println(schema.execute("{ user(id: \"3\", username: \"tura\") { username } }"))
     println(schema.execute(askSchema("User")))
 }
 
