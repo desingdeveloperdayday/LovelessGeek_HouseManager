@@ -13,8 +13,8 @@ Resources:
             Path: "/v1/graphql"
             Method: "get"
       Runtime: "java8"
-      Timeout: 15
-      MemorySize: 128
+      Timeout: 40
+      MemorySize: 256
   GraphQLPost:
     Type: "AWS::Serverless::Function"
     Properties:
@@ -27,8 +27,8 @@ Resources:
             Path: "/v1/graphql"
             Method: "post"
       Runtime: "java8"
-      Timeout: 15
-      MemorySize: 128
+      Timeout: 40
+      MemorySize: 256
 Outputs:
   ProdEndpoint:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
