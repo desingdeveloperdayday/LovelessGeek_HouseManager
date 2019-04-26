@@ -8,7 +8,7 @@ DDD 2기 애정결핍덕후팀의 House Manager(가제) API
 
 - Kotlin
 - Kotlin Coroutines
-- AWS Lamba
+- AWS Lambda
 - GraphQL
 
 
