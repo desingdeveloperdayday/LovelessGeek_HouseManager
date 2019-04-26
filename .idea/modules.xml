@@ -3,6 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/HouseManagerApi.iml" filepath="$PROJECT_DIR$/.idea/modules/HouseManagerApi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/HouseManagerApi.api.iml" filepath="$PROJECT_DIR$/.idea/modules/api/HouseManagerApi.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/HouseManagerApi.api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api/HouseManagerApi.api.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api/HouseManagerApi.api.test.iml" filepath="$PROJECT_DIR$/.idea/modules/api/HouseManagerApi.api.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/HouseManagerApi.shared.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/HouseManagerApi.shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/HouseManagerApi.shared.main.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/HouseManagerApi.shared.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/HouseManagerApi.shared.test.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/HouseManagerApi.shared.test.iml" />
     </modules>
   </component>
 </project>
