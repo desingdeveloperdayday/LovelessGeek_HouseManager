@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: "AWS::Serverless-2016-10-31"
+Resources:
+  GraphQLGet:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: "com.lovelessgeek.housemanager.api.handler.GetRequestHandler::handleRequest"
+      CodeUri: "./build/libs/api-all.jar"
+      Events:
+        IndexApi:
+          Type: "Api"
+          Properties:
+            Path: "/v1/graphql"
+            Method: "get"
+      Runtime: "java8"
+      Timeout: 60
+      MemorySize: 128
+  GraphQLPost:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: "com.lovelessgeek.housemanager.api.handler.PostRequestHandler::handleRequest"
+      CodeUri: "./build/libs/api-all.jar"
+      Events:
+        IndexApi:
+          Type: "Api"
+          Properties:
+            Path: "/v1/graphql"
+            Method: "post"
+      Runtime: "java8"
+      Timeout: 60
+      MemorySize: 128
+Outputs:
+  ProdEndpoint:
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
