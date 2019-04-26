@@ -8,3 +8,8 @@
  */
 
 rootProject.name = "HouseManagerApi"
+
+include(
+    ":shared",
+    ":api"
+)
