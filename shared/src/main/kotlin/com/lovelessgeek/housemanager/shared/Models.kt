@@ -31,6 +31,6 @@ val task2 = InstantTask(id = "2", name = "세탁하기", time = LocalDateTime.no
 val tasks: List<Task> = listOf(task1, task2)
 
 val user1 = User("1", "tura", listOf(task1))
-val user2 = User("2", "geonho")
+val user2 = User("2", "ddd")
 val user3 = User("3", "alan", listOf(task2))
 val users = listOf(user1, user2, user3)
