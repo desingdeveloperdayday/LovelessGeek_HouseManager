@@ -11,5 +11,7 @@ rootProject.name = "HouseManagerApi"
 
 include(
     ":shared",
-    ":api"
+    ":server:data",
+    ":server:graphql",
+    ":server:api"
 )

@@ -13,6 +13,36 @@ DDD 2기 애정결핍덕후팀의 House Manager(가제) API
 
 
 
+## Modules
+
+### Shared
+
+#### shared
+
+여러 모듈에서 사용될 수 있는 공통된 것들을 모아놓은 모듈입니다.
+현재는 데이터 모델과 Object <-> Primitives 변환 매커니즘이 있습니다.
+
+#### buildSrc
+
+전체적인 빌드 로직과 버전 정보를 관리하기 위한 Gradle의 특별한 모듈입니다. [문서 참조](https://docs.gradle.org/current/userguide/organizing_gradle_projects.html#sec:build_sources)
+
+### Server
+
+#### server:api
+
+AWS Lambda와 상호작용하는 모듈입니다. 배포를 위한 템플릿과 관련 dependency를 포함하고 있습니다.
+Handler 역시 이곳에서 작성합니다.
+
+#### server:graphql
+
+서버의 데이터 모델을 GraphQL의 Schema로 구현하는 모듈입니다.
+
+#### server:data
+
+MySQL DB와 상호작용하는 모듈입니다. 데이터 인출 및 갱신을 담당합니다.
+
+
+
 ## API Specification
 
 ### Few things to note
