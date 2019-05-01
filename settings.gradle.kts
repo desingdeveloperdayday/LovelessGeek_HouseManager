@@ -13,5 +13,6 @@ include(
     ":shared",
     ":server:data",
     ":server:graphql",
-    ":server:api"
+    ":server:api",
+    ":android:app"
 )
