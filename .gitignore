@@ -62,3 +62,15 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/windows,macos
+
+# Android
+*.apk
+*.dex
+*.class
+bin/
+gen/
+local.properties
+proguard/
+*.log
+.navigation
+output.json

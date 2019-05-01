@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version Version.kotlin
+    kotlin("jvm")
     id("aws.sam") version Version.samPlugin
 }
 
