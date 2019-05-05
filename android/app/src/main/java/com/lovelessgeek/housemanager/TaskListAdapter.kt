@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.lovelessgeek.housemanager.data.InstantTask
 import com.lovelessgeek.housemanager.data.Task
+import com.lovelessgeek.housemanager.data.TaskType
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -21,8 +23,13 @@ class TaskListAdapter(private val mItems: ArrayList<Task>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mItems[position]
-        holder.taskName.text = item.title
-        holder.startsAt.text = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(Date(item.startsAt))
+        when (item.type) {
+            TaskType.INSTANT -> {
+                item as InstantTask
+                holder.taskName.text = item.name
+                holder.startsAt.text = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(Date(item.time))
+            }
+        }
     }
 
     /**

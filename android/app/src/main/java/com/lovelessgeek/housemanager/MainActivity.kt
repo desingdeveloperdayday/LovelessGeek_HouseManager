@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import com.lovelessgeek.housemanager.data.InstantTask
 import com.lovelessgeek.housemanager.data.Task
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         val taskName = it.getStringExtra("title")
                         Log.d(TAG, "title: $title")
                         val period = it.getLongExtra("startsAt", 0)
-                        taskItems.add(Task(title=taskName, startsAt=period))
+                        taskItems.add(InstantTask(id=System.currentTimeMillis().toString(), name=taskName, time=System.currentTimeMillis()))
                         taskAdapter.notifyDataSetChanged()
                     }
                 }

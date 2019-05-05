@@ -1,11 +1,20 @@
 package com.lovelessgeek.housemanager.data
 
-data class Task @JvmOverloads constructor(
-    var type: TaskType  = TaskType.NOT_CATEGORIZED,
-    var title: String   = "Default Task Job",
-    var startsAt: Long  = 0
+import java.time.LocalDateTime
+
+abstract class Task(
+    open val type: TaskType,
+    open val id: String,
+    open val name: String
 )
 
 enum class TaskType {
-    NOT_CATEGORIZED
+    INSTANT
 }
+
+data class InstantTask(
+    override val type: TaskType = TaskType.INSTANT,
+    override val id: String,
+    override val name: String,
+    val time: Long//LocalDateTime
+) : Task(type, id, name)
