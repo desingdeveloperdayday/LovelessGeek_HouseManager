@@ -2,6 +2,7 @@ package com.lovelessgeek.housemanager.shared.models
 
 import com.lovelessgeek.housemanager.shared.models.TaskType.INSTANT
 import java.time.LocalDateTime
+import java.util.*
 
 data class User(
     val id: String,
@@ -23,5 +24,5 @@ data class InstantTask(
     override val type: TaskType = INSTANT,
     override val id: String,
     override val name: String,
-    val time: Long//LocalDateTime
+    val time: Date//Long//LocalDateTime
 ) : Task(type, id, name)

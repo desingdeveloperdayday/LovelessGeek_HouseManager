@@ -27,7 +27,7 @@ class TaskListAdapter(private val mItems: ArrayList<Task>) : RecyclerView.Adapte
             TaskType.INSTANT -> {
                 item as InstantTask
                 holder.taskName.text = item.name
-                holder.startsAt.text = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(Date(item.time))
+                holder.startsAt.text = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(item.time)
             }
         }
     }

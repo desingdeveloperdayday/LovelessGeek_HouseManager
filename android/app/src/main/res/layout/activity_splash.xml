@@ -26,6 +26,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tv_title"
-            android:src="@drawable/ic_launcher_foreground"/>
+            android:src="@drawable/ic_outline_settings"/>
 
 </android.support.constraint.ConstraintLayout>

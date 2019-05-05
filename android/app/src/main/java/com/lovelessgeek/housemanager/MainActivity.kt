@@ -4,11 +4,12 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.View
 import com.lovelessgeek.housemanager.shared.models.InstantTask
 import com.lovelessgeek.housemanager.shared.models.Task
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -61,10 +62,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             RequestCode.NEW_TASK -> {
                 if (resultCode == RESULT_OK) {
                     data?.let {
-                        val taskName = it.getStringExtra("title")
-                        Log.d(TAG, "title: $title")
-                        val period = it.getLongExtra("startsAt", 0)
-                        taskItems.add(InstantTask(id=System.currentTimeMillis().toString(), name=taskName, time=period))
+                        val taskName = it.getStringExtra("taskName")
+                        val date = it.getLongExtra("date", 0)
+                        taskItems.add(InstantTask(id=System.currentTimeMillis().toString(), name=taskName, time=Date(date)))
                         taskAdapter.notifyDataSetChanged()
                     }
                 }
