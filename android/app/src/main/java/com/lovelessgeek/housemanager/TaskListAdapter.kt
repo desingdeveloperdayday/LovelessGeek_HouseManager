@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.lovelessgeek.housemanager.data.InstantTask
-import com.lovelessgeek.housemanager.data.Task
-import com.lovelessgeek.housemanager.data.TaskType
+import com.lovelessgeek.housemanager.shared.models.InstantTask
+import com.lovelessgeek.housemanager.shared.models.Task
+import com.lovelessgeek.housemanager.shared.models.TaskType
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList

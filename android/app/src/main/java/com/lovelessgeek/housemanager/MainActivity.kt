@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
-import com.lovelessgeek.housemanager.data.InstantTask
-import com.lovelessgeek.housemanager.data.Task
+import com.lovelessgeek.housemanager.shared.models.InstantTask
+import com.lovelessgeek.housemanager.shared.models.Task
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.LocalDateTime
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -32,8 +31,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun init() {
         // Task RecyclerView
-        //taskItems.addAll(arrayListOf(Task(title="Task #01"), Task(title="Task #02"), Task(title="Task #03"), Task(title="Task #04"),
-        //                        Task(title="Task #05"), Task(title="Task #06"), Task(title="Task #07"), Task(title="Task #08")))
         todo_recycler_view.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = taskAdapter
@@ -67,7 +64,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         val taskName = it.getStringExtra("title")
                         Log.d(TAG, "title: $title")
                         val period = it.getLongExtra("startsAt", 0)
-                        taskItems.add(InstantTask(id=System.currentTimeMillis().toString(), name=taskName, time=System.currentTimeMillis()))
+                        taskItems.add(InstantTask(id=System.currentTimeMillis().toString(), name=taskName, time=period))
                         taskAdapter.notifyDataSetChanged()
                     }
                 }

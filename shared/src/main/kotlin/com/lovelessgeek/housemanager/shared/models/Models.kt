@@ -23,5 +23,5 @@ data class InstantTask(
     override val type: TaskType = INSTANT,
     override val id: String,
     override val name: String,
-    val time: LocalDateTime
+    val time: Long//LocalDateTime
 ) : Task(type, id, name)
