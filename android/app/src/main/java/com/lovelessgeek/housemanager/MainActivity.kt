@@ -30,11 +30,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun init() {
         // Task RecyclerView
-        taskItems.addAll(arrayListOf(Task(title="Task #01"), Task(title="Task #02"), Task(title="Task #03"), Task(title="Task #04"),
-                                Task(title="Task #05"), Task(title="Task #06"), Task(title="Task #07"), Task(title="Task #08")))
+        //taskItems.addAll(arrayListOf(Task(title="Task #01"), Task(title="Task #02"), Task(title="Task #03"), Task(title="Task #04"),
+        //                        Task(title="Task #05"), Task(title="Task #06"), Task(title="Task #07"), Task(title="Task #08")))
         todo_recycler_view.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = taskAdapter
+            setEmptyView(empty_layout)
         }
         taskAdapter.notifyDataSetChanged()
 
