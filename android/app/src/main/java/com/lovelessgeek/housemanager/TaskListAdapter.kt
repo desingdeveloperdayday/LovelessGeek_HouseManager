@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import com.lovelessgeek.housemanager.shared.models.InstantTask
 import com.lovelessgeek.housemanager.shared.models.Task
@@ -30,6 +31,11 @@ class TaskListAdapter(private val mItems: ArrayList<Task>) : RecyclerView.Adapte
                 holder.startsAt.text = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(item.time)
             }
         }
+        holder.deleteButton.setOnClickListener {
+            mItems.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
+        }
     }
 
     /**
@@ -38,5 +44,6 @@ class TaskListAdapter(private val mItems: ArrayList<Task>) : RecyclerView.Adapte
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val taskName: TextView = view.findViewById(R.id.tv_task_name)
         val startsAt: TextView = view.findViewById(R.id.tv_task_starts_at)
+        val deleteButton: ImageButton = view.findViewById(R.id.ib_delete)
     }
 }

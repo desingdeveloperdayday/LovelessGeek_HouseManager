@@ -5,6 +5,8 @@ build/
 out/
 *.iml
 
+private.xml
+
 # Created by https://www.gitignore.io/api/windows,macos
 # Edit at https://www.gitignore.io/?templates=windows,macos
 
