@@ -1,7 +1,5 @@
 package com.lovelessgeek.housemanager.shared.models
 
-import com.lovelessgeek.housemanager.shared.models.TaskType.INSTANT
-import java.time.LocalDateTime
 import java.util.*
 
 data class User(
@@ -11,18 +9,25 @@ data class User(
 )
 
 abstract class Task(
-    open val type: TaskType,
+    open val type: String,
     open val id: String,
     open val name: String
 )
 
-enum class TaskType {
-    INSTANT
+/*
+enum class TaskType(var type: String? = null) {
+    INSTANT(null)
+}
+*/
+class TaskType {
+    companion object {
+        const val INSTANT = "0x0000"
+    }
 }
 
 data class InstantTask(
-    override val type: TaskType = INSTANT,
+    override val type: String = TaskType.INSTANT,
     override val id: String,
     override val name: String,
-    val time: Date//Long//LocalDateTime
+    val time: Date
 ) : Task(type, id, name)

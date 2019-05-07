@@ -7,4 +7,6 @@ object Version {
 
     const val samPlugin = "0.1.0"
     const val kgraphql = "0.3.0"
+
+    const val room = "2.1.0-alpha07"
 }

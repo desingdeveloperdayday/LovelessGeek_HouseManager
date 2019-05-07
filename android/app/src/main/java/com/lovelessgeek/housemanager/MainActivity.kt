@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
-import com.lovelessgeek.housemanager.shared.models.InstantTask
-import com.lovelessgeek.housemanager.shared.models.Task
+import com.lovelessgeek.housemanager.data.LocalDatabase
+import com.lovelessgeek.housemanager.data.TaskEntity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -15,8 +15,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private val TAG = MainActivity::class.java.simpleName
 
-    private val taskItems = ArrayList<Task>()
+    private val taskItems = ArrayList<TaskEntity>()
     private val taskAdapter = TaskListAdapter(taskItems)
+
+    private var database: LocalDatabase? = null
 
     // FIXME
     object RequestCode {
@@ -37,7 +39,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             adapter = taskAdapter
             setEmptyView(empty_layout)
         }
-        taskAdapter.notifyDataSetChanged()
+        database = LocalDatabase.getInstance(this)
+        taskAdapter.database = database
+        Thread { database?.getTaskDao()?.loadAllTasks()?.let { taskAdapter.addAll(it) } }.start()
 
         // Fab
         fab_add_task.setOnClickListener(this)
@@ -64,8 +68,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     data?.let {
                         val taskName = it.getStringExtra("taskName")
                         val date = it.getLongExtra("date", 0)
-                        taskItems.add(InstantTask(id=System.currentTimeMillis().toString(), name=taskName, time=Date(date)))
-                        taskAdapter.notifyDataSetChanged()
+                        val task = TaskEntity(id=System.currentTimeMillis().toString(), name=taskName, time=Date(date))
+                        Thread {
+                            database?.getTaskDao()?.insert(task)
+                        }.start()
+                        taskAdapter.add(task)
                     }
                 }
             }
