@@ -6,6 +6,7 @@ out/
 *.iml
 
 private.xml
+google-services.json
 
 # Created by https://www.gitignore.io/api/windows,macos
 # Edit at https://www.gitignore.io/?templates=windows,macos

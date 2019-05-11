@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.lovelessgeek.housemanager.data.LocalDatabase
 import com.lovelessgeek.housemanager.data.TaskEntity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,6 +16,8 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private val TAG = MainActivity::class.java.simpleName
+
+    private var mFirebaseUser: FirebaseUser? = null
 
     private val taskItems = ArrayList<TaskEntity>()
     private val taskAdapter = TaskListAdapter(taskItems)
@@ -28,6 +32,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        if (firebaseUser == null) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            return finish()
+        }
+        mFirebaseUser = firebaseUser
 
         init()
     }
