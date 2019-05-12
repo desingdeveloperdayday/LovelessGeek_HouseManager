@@ -2,18 +2,15 @@ package com.lovelessgeek.housemanager
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_new_task.*
 import java.util.Calendar
 
-class NewTaskActivity : AppCompatActivity() {
+class NewTaskActivity : BaseActivity() {
 
     companion object {
         const val KEY_TASK_NAME = "key_task_name"
         const val KEY_DATE = "key_date"
     }
-
-    private val TAG = NewTaskActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

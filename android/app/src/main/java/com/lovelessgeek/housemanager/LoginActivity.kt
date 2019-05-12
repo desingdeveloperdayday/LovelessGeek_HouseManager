@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ProgressBar
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -15,10 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     companion object {
-        private val TAG = LoginActivity::class.java.simpleName
         private const val RC_SIGN_IN = 0x0000
     }
 
@@ -51,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
                     val account = task.getResult(ApiException::class.java)
                     firebaseAuthWithGoogle(account!!)
                 } catch (exception: ApiException) {
-                    Log.w(TAG, "Google sign in failed..", exception)
+                    Log.w(logTag, "Google sign in failed..", exception)
                 }
             }
         }
@@ -63,10 +61,10 @@ class LoginActivity : AppCompatActivity() {
         mFirebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    Log.d(TAG, "Succeed to sign in!")
+                    Log.d(logTag, "Succeed to sign in!")
                     startMainActivity()
                 } else {
-                    Log.w(TAG, "Failed to sign in..")
+                    Log.w(logTag, "Failed to sign in..")
                     Snackbar.make(root_view, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
                 }
                 progress_bar.visibility = ProgressBar.INVISIBLE

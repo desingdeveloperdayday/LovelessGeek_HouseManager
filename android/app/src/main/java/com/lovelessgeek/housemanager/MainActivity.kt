@@ -14,8 +14,6 @@ import java.util.Date
 
 class MainActivity : AppCompatActivity() {
 
-    private val TAG = MainActivity::class.java.simpleName
-
     private var mFirebaseUser: FirebaseUser? = null
 
     private val taskAdapter = TaskListAdapter()
