@@ -1,9 +1,9 @@
 package com.lovelessgeek.housemanager
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 
 class EmptyRecyclerView : RecyclerView {
 
@@ -30,7 +30,11 @@ class EmptyRecyclerView : RecyclerView {
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
+    constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(
+        context,
+        attrs,
+        defStyle
+    )
 
     private fun initEmptyView() {
         mEmptyView?.let {

@@ -1,20 +1,20 @@
 package com.lovelessgeek.housemanager
 
 import android.os.AsyncTask
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.lovelessgeek.housemanager.data.LocalDatabase
 import com.lovelessgeek.housemanager.data.TaskEntity
 import com.lovelessgeek.housemanager.shared.models.TaskType
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
-class TaskListAdapter(private val mItems: ArrayList<TaskEntity>) : RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
+class TaskListAdapter(private val mItems: ArrayList<TaskEntity>) :
+    RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
 
     var database: LocalDatabase? = null
 
@@ -31,7 +31,8 @@ class TaskListAdapter(private val mItems: ArrayList<TaskEntity>) : RecyclerView.
             TaskType.INSTANT -> {
                 //item as InstantTask
                 holder.taskName.text = item.name
-                holder.startsAt.text = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(item.time)
+                holder.startsAt.text =
+                    SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(item.time)
             }
         }
         holder.deleteButton.setOnClickListener {

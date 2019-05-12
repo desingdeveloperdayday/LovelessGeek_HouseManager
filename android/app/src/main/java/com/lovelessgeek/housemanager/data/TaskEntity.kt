@@ -8,7 +8,7 @@ import java.util.Date
 @Entity(tableName = "task")
 data class TaskEntity(
     @PrimaryKey val id: String = "TASK_ID",
-    var type: String         = TaskType.INSTANT,
-    var name: String           = "TASK_NAME",
-    var time: Date  = Date(0)
+    var type: String = TaskType.INSTANT,
+    var name: String = "TASK_NAME",
+    var time: Date = Date(0)
 )// : Task(type, id, name)

@@ -1,17 +1,16 @@
 package com.lovelessgeek.housemanager
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.lovelessgeek.housemanager.data.LocalDatabase
 import com.lovelessgeek.housemanager.data.TaskEntity
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Date
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -80,7 +79,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     data?.let {
                         val taskName = it.getStringExtra("taskName")
                         val date = it.getLongExtra("date", 0)
-                        val task = TaskEntity(id=System.currentTimeMillis().toString(), name=taskName, time=Date(date))
+                        val task = TaskEntity(
+                            id = System.currentTimeMillis().toString(),
+                            name = taskName,
+                            time = Date(date)
+                        )
                         Thread {
                             database?.getTaskDao()?.insert(task)
                         }.start()

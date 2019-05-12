@@ -1,11 +1,11 @@
 package com.lovelessgeek.housemanager
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_new_task.*
-import java.util.*
+import java.util.Calendar
 
 class NewTaskActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -25,7 +25,11 @@ class NewTaskActivity : AppCompatActivity(), View.OnClickListener {
         when (view.id) {
             R.id.btn_create_task -> {
                 val calendar = Calendar.getInstance()
-                calendar.set(dp_task_starts_at.year, dp_task_starts_at.month, dp_task_starts_at.dayOfMonth)
+                calendar.set(
+                    dp_task_starts_at.year,
+                    dp_task_starts_at.month,
+                    dp_task_starts_at.dayOfMonth
+                )
 
                 val intent = Intent()
                 intent.putExtra("taskName", et_task_name.text.toString())
