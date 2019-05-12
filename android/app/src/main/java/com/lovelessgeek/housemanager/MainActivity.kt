@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.lovelessgeek.housemanager.data.LocalDatabase
-import com.lovelessgeek.housemanager.data.TaskEntity
+import com.lovelessgeek.housemanager.data.db.LocalDatabase
+import com.lovelessgeek.housemanager.data.db.TaskEntity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Date
 

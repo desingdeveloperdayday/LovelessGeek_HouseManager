@@ -1,11 +1,12 @@
-package com.lovelessgeek.housemanager.data
+package com.lovelessgeek.housemanager.data.db
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 
 @Dao
-abstract class TaskDao : BaseDao<TaskEntity> {
+abstract class TaskDao :
+    BaseDao<TaskEntity> {
 
     @Delete
     abstract fun deleteTask(task: TaskEntity)

@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager.data.util
+package com.lovelessgeek.housemanager.data.db.util
 
 import androidx.room.TypeConverter
 import java.util.Date

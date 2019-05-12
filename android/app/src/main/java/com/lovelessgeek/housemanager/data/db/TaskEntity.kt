@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager.data
+package com.lovelessgeek.housemanager.data.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

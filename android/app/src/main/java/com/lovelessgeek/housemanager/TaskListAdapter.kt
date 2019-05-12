@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lovelessgeek.housemanager.data.LocalDatabase
-import com.lovelessgeek.housemanager.data.TaskEntity
+import com.lovelessgeek.housemanager.data.db.LocalDatabase
+import com.lovelessgeek.housemanager.data.db.TaskEntity
 import com.lovelessgeek.housemanager.shared.models.TaskType
 import java.text.SimpleDateFormat
 import java.util.Locale
