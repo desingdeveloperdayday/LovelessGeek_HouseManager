@@ -3,7 +3,6 @@ package com.lovelessgeek.housemanager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -16,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = LoginActivity::class.java.simpleName
@@ -37,7 +36,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        btn_google_login.setOnClickListener(this)
+        btn_google_login.setOnClickListener {
+            startActivityForResult(mGoogleSignInClient.signInIntent, RC_SIGN_IN)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -77,16 +78,4 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         startActivity(intent)
         finish()
     }
-
-    /**
-     * View.OnClickListener
-     */
-    override fun onClick(view: View) {
-        when (view.id) {
-            R.id.btn_google_login -> {
-                startActivityForResult(mGoogleSignInClient.signInIntent, RC_SIGN_IN)
-            }
-        }
-    }
-    // View.OnClickListener
 }

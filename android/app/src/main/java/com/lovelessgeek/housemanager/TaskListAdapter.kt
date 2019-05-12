@@ -1,22 +1,21 @@
 package com.lovelessgeek.housemanager
 
-import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lovelessgeek.housemanager.data.db.LocalDatabase
 import com.lovelessgeek.housemanager.data.db.TaskEntity
 import com.lovelessgeek.housemanager.shared.models.TaskType
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class TaskListAdapter(private val mItems: ArrayList<TaskEntity>) :
-    RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
+class TaskListAdapter : RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
 
-    var database: LocalDatabase? = null
+    private var onClickDelete: ((TaskEntity) -> Unit)? = null
+
+    private val mItems: MutableList<TaskEntity> = mutableListOf()
 
     override fun getItemCount(): Int = mItems.size
 
@@ -37,11 +36,16 @@ class TaskListAdapter(private val mItems: ArrayList<TaskEntity>) :
         }
         holder.deleteButton.setOnClickListener {
             val task = mItems[position]
-            AsyncTask.execute { database?.getTaskDao()?.deleteTask(task) }
             mItems.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemCount)
+
+            onClickDelete?.invoke(task)
         }
+    }
+
+    fun onClickDelete(onClickDelete: ((TaskEntity) -> Unit)?) {
+        this.onClickDelete = onClickDelete
     }
 
     fun add(item: TaskEntity) {
