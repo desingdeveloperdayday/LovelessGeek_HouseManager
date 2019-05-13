@@ -2,6 +2,7 @@ package com.lovelessgeek.housemanager.ui.newtask
 
 import android.content.Intent
 import android.os.Bundle
+import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.R.layout
 import com.lovelessgeek.housemanager.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_new_task.*
@@ -27,7 +28,9 @@ class NewTaskActivity : BaseActivity() {
             )
 
             val intent = Intent()
-            intent.putExtra(KEY_TASK_NAME, et_task_name.text.toString())
+            val taskName = et_task_name.text.toString().takeIf { it.isNotEmpty() }
+                ?: getString(R.string.no_name)
+            intent.putExtra(KEY_TASK_NAME, taskName)
             intent.putExtra(KEY_DATE, calendar.timeInMillis)
             setResult(RESULT_OK, intent)
             finish()
