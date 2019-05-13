@@ -3,25 +3,21 @@ package com.lovelessgeek.housemanager.ui.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.lovelessgeek.housemanager.R.layout
-import com.lovelessgeek.housemanager.data.Repository
-import com.lovelessgeek.housemanager.data.db.TaskEntity
-import com.lovelessgeek.housemanager.ui.login.LoginActivity
+import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Failure
+import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Loading
+import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Success
 import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.inject
-import java.util.Date
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private var mFirebaseUser: FirebaseUser? = null
-
     private val taskAdapter = TaskListAdapter()
 
-    private val repository: Repository by inject()
+    private val vm: MainViewModel by viewModel()
 
     // FIXME
     object RequestCode {
@@ -32,42 +28,52 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_main)
 
-        FirebaseAuth.getInstance().currentUser
-            ?.let { mFirebaseUser = it }
-            ?: run(this::backToLogin)
+        setupTaskList()
 
-        init()
+        // Fab
+        fab_add_task.setOnClickListener {
+            vm.onClickAdd()
+        }
+
+        vm.backToLogin.observe(this) {
+            it.runIfNotHandled {
+                //                val intent = Intent(this, LoginActivity::class.java)
+//                startActivity(intent)
+//                finish()
+            }
+        }
+
+        vm.state.observe(this) { state ->
+            when (state) {
+                Loading, Failure -> {
+                    TODO()
+                }
+                is Success -> {
+                    state.tasks?.let(taskAdapter::addAll)
+                    state.newTask?.let(taskAdapter::add)
+                }
+            }
+        }
+
+        vm.moveToNewTask.observe(this) {
+            val intent = Intent(this, NewTaskActivity::class.java)
+            startActivityForResult(
+                intent,
+                RequestCode.NEW_TASK
+            )
+        }
     }
 
-    private fun backToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun init() {
+    private fun setupTaskList() {
         // Task RecyclerView
         taskAdapter.onClickDelete {
-            Thread { repository.deleteTask(it) }
+            vm.onClickDeleteTask(it)
         }
 
         todo_recycler_view.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = taskAdapter
             setEmptyView(empty_layout)
-        }
-
-        Thread {
-            repository.loadAllTasks().let { taskAdapter.addAll(it) }
-        }.start()
-
-        // Fab
-        fab_add_task.setOnClickListener {
-            val intent = Intent(this, NewTaskActivity::class.java)
-            startActivityForResult(
-                intent,
-                RequestCode.NEW_TASK
-            )
         }
     }
 
@@ -77,23 +83,12 @@ class MainActivity : AppCompatActivity() {
             RequestCode.NEW_TASK -> {
                 if (resultCode == RESULT_OK) {
                     data?.let {
-                        makeTaskFromIntent(it).let { task ->
-                            Thread { repository.addNewTask(task) }.start()
-                            taskAdapter.add(task)
-                        }
+                        val taskName = it.getStringExtra(NewTaskActivity.KEY_TASK_NAME)
+                        val date = it.getLongExtra(NewTaskActivity.KEY_DATE, 0)
+                        vm.addNewTask(taskName, date)
                     }
                 }
             }
         }
-    }
-
-    private fun makeTaskFromIntent(intent: Intent): TaskEntity {
-        val taskName = intent.getStringExtra("taskName")
-        val date = intent.getLongExtra("date", 0)
-        return TaskEntity(
-            id = System.currentTimeMillis().toString(),
-            name = taskName,
-            time = Date(date)
-        )
     }
 }
