@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager
+package com.lovelessgeek.housemanager.base
 
 import androidx.appcompat.app.AppCompatActivity
 

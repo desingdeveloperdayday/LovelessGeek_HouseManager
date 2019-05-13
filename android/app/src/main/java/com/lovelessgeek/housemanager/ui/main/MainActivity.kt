@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager
+package com.lovelessgeek.housemanager.ui.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.lovelessgeek.housemanager.R.layout
 import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.data.db.TaskEntity
+import com.lovelessgeek.housemanager.ui.login.LoginActivity
+import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import java.util.Date
@@ -27,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(layout.activity_main)
 
         FirebaseAuth.getInstance().currentUser
             ?.let { mFirebaseUser = it }
@@ -61,7 +64,10 @@ class MainActivity : AppCompatActivity() {
         // Fab
         fab_add_task.setOnClickListener {
             val intent = Intent(this, NewTaskActivity::class.java)
-            startActivityForResult(intent, RequestCode.NEW_TASK)
+            startActivityForResult(
+                intent,
+                RequestCode.NEW_TASK
+            )
         }
     }
 

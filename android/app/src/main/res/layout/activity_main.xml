@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content_layout"
@@ -49,7 +49,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.lovelessgeek.housemanager.EmptyRecyclerView
+        <com.lovelessgeek.housemanager.ui.main.EmptyRecyclerView
             android:id="@+id/todo_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"

@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager
+package com.lovelessgeek.housemanager.ui.main
 
 import android.content.Context
 import android.util.AttributeSet

@@ -1,7 +1,9 @@
-package com.lovelessgeek.housemanager
+package com.lovelessgeek.housemanager.ui.newtask
 
 import android.content.Intent
 import android.os.Bundle
+import com.lovelessgeek.housemanager.R.layout
+import com.lovelessgeek.housemanager.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_new_task.*
 import java.util.Calendar
 
@@ -14,7 +16,7 @@ class NewTaskActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_task)
+        setContentView(layout.activity_new_task)
 
         btn_create_task.setOnClickListener {
             val calendar = Calendar.getInstance()

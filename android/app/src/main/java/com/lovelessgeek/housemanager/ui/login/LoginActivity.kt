@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager
+package com.lovelessgeek.housemanager.ui.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.lovelessgeek.housemanager.R.layout
+import com.lovelessgeek.housemanager.R.string
+import com.lovelessgeek.housemanager.base.BaseActivity
+import com.lovelessgeek.housemanager.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity() {
@@ -26,16 +30,19 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(layout.activity_login)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(string.default_web_client_id))
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         btn_google_login.setOnClickListener {
-            startActivityForResult(mGoogleSignInClient.signInIntent, RC_SIGN_IN)
+            startActivityForResult(
+                mGoogleSignInClient.signInIntent,
+                RC_SIGN_IN
+            )
         }
     }
 
