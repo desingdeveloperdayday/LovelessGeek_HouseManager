@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.lovelessgeek.housemanager.data.Provider
 import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.data.db.TaskEntity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 import java.util.Date
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private val taskAdapter = TaskListAdapter()
 
-    private val repository: Repository by lazy { Provider.provideRepository(this) }
+    private val repository: Repository by inject()
 
     // FIXME
     object RequestCode {
