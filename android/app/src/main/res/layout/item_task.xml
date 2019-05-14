@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,58 +15,58 @@
             android:id="@+id/iv_category"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/app_name"
             android:src="@drawable/ic_outline_settings"
-            android:contentDescription="@string/app_name"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_task_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/iv_category"
-            app:layout_constraintStart_toEndOf="@id/iv_category"
             android:layout_marginStart="16dp"
             android:text="NOTIFICATION NAME"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/iv_category"
+            app:layout_constraintTop_toTopOf="@id/iv_category" />
 
         <TextView
             android:id="@+id/tv_noti_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="사용 중"
             app:layout_constraintStart_toStartOf="@id/tv_task_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_task_name"
-            android:text="사용 중"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_task_name" />
 
         <!-- TODO: include -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintWidth_percent="0.8"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_noti_status"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintWidth_percent="0.8">
 
             <ImageView
                 android:id="@+id/iv_sub_category_01"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_outline_settings"
-                android:contentDescription="@string/app_name"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/tv_task_starts_at"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/iv_sub_category_01"
-                app:layout_constraintBottom_toBottomOf="@id/iv_sub_category_01"
                 android:text="2019-04-29"
-                android:textSize="32sp"/>
+                android:textSize="32sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_sub_category_01"
+                app:layout_constraintStart_toEndOf="@id/iv_sub_category_01" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -74,9 +74,9 @@
             android:id="@+id/ib_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_twotone_delete_forever"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_twotone_delete_forever"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

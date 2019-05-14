@@ -21,8 +21,7 @@ dependencies {
     implementation(project(":shared"))
     implementation(project(":server:data"))
 
-    api("com.github.pgutkowski:kgraphql:${Version.
-        kgraphql}")
+    api("com.github.pgutkowski:kgraphql:${Version.kgraphql}")
 
     testImplementation(kotlin("test-junit"))
 }
