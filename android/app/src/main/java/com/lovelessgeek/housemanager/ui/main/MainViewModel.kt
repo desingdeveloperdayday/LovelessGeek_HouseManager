@@ -3,6 +3,8 @@ package com.lovelessgeek.housemanager.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.lovelessgeek.housemanager.base.event.SimpleEvent
 import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.data.db.TaskEntity
@@ -24,7 +26,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val state: LiveData<MainState>
         get() = _state
 
-//    private var mFirebaseUser: FirebaseUser?
+    private var mFirebaseUser: FirebaseUser?
 
     sealed class MainState {
         object Loading : MainState()
@@ -36,11 +38,11 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     }
 
     init {
-//        mFirebaseUser = FirebaseAuth.getInstance().currentUser
-//            ?: run {
-//                _backToLogin.value = SimpleEvent()
-//                null
-//            }
+        mFirebaseUser = FirebaseAuth.getInstance().currentUser
+            ?: run {
+                _backToLogin.value = SimpleEvent()
+                null
+            }
 
         runAndForget {
             loadAllTasks()

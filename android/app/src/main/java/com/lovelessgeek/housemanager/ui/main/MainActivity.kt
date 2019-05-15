@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lovelessgeek.housemanager.R.layout
+import com.lovelessgeek.housemanager.ui.login.LoginActivity
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Failure
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Loading
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Success
@@ -37,9 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         vm.backToLogin.observe(this) {
             it.runIfNotHandled {
-                //                val intent = Intent(this, LoginActivity::class.java)
-//                startActivity(intent)
-//                finish()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
 
