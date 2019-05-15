@@ -3,13 +3,14 @@ package com.lovelessgeek.housemanager.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.lovelessgeek.housemanager.base.event.SimpleEvent
 import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.data.db.TaskEntity
-import com.lovelessgeek.housemanager.runAndForget
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Success
+import kotlinx.coroutines.launch
 import java.util.Date
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
@@ -44,22 +45,18 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
                 null
             }
 
-        runAndForget {
-            loadAllTasks()
-        }
+        loadAllTasks()
     }
 
-    private fun loadAllTasks() {
+    private fun loadAllTasks() = viewModelScope.launch {
         repository.loadAllTasks().let { tasks ->
             // Should use postValue() here, because it is not in main thread.
             _state.postValue(Success(tasks = tasks))
         }
     }
 
-    fun onClickDeleteTask(taskEntity: TaskEntity) {
-        runAndForget {
-            repository.deleteTask(taskEntity)
-        }
+    fun onClickDeleteTask(taskEntity: TaskEntity) = viewModelScope.launch {
+        repository.deleteTask(taskEntity)
     }
 
     fun onClickAdd() {
@@ -67,12 +64,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     }
 
     // 이렇게 하는게 좋을지 확신이 없다..
-    fun addNewTask(taskName: String, date: Long) {
-        runAndForget {
-            val task = makeTaskFromIntent(taskName, date)
-            repository.addNewTask(task)
-            _state.postValue(Success(newTask = task))
-        }
+    fun addNewTask(taskName: String, date: Long) = viewModelScope.launch {
+        val task = makeTaskFromIntent(taskName, date)
+        repository.addNewTask(task)
+        _state.postValue(Success(newTask = task))
     }
 
     private fun makeTaskFromIntent(taskName: String, date: Long) = TaskEntity(

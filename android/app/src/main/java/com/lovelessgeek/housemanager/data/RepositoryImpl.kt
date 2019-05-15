@@ -8,15 +8,15 @@ class RepositoryImpl(db: LocalDatabase) : Repository {
 
     private val taskDao: TaskDao = db.getTaskDao()
 
-    override fun loadAllTasks(): List<TaskEntity> {
+    override suspend fun loadAllTasks(): List<TaskEntity> {
         return taskDao.loadAllTasks()
     }
 
-    override fun addNewTask(task: TaskEntity) {
+    override suspend fun addNewTask(task: TaskEntity) {
         taskDao.insert(task)
     }
 
-    override fun deleteTask(task: TaskEntity) {
+    override suspend fun deleteTask(task: TaskEntity) {
         taskDao.deleteTask(task)
     }
 }
