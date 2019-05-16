@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lovelessgeek.housemanager.R.layout
+import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.ui.login.LoginActivity
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Failure
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Loading
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.activity_main)
+        setContentView(R.layout.activity_main)
 
         setupTaskList()
 

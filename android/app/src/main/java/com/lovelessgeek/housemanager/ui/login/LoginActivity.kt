@@ -12,7 +12,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.lovelessgeek.housemanager.R.layout
+import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.R.string
 import com.lovelessgeek.housemanager.base.BaseActivity
 import com.lovelessgeek.housemanager.ui.main.MainActivity
@@ -30,7 +30,7 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.activity_login)
+        setContentView(R.layout.activity_login)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(string.default_web_client_id))
