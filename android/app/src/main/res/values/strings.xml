@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">HouseManager</string>
     <string name="no_name">이름 없음</string>
+    <string name="menu_profile">계정</string>
+    <string name="menu_notification">알림</string>
+    <string name="menu_report">리포트</string>
+    <string name="menu_settings">설정</string>
 </resources>

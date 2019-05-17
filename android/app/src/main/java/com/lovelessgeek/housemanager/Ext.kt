@@ -1,9 +1,17 @@
 package com.lovelessgeek.housemanager
 
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
 
-inline fun <reified T : ViewModel> FragmentActivity.getViewModel(): T {
-    return ViewModelProviders.of(this).get(T::class.java)
+fun FragmentActivity.replace(@IdRes containerId: Int, fragment: Fragment) {
+    supportFragmentManager.beginTransaction()
+        .replace(containerId, fragment)
+        .commitNow()
+}
+
+fun Fragment.setSupportActionBar(toolbar: Toolbar) {
+    (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
 }
