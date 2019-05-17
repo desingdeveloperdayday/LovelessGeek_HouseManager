@@ -8,7 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.observe
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BaseActivity
-import com.lovelessgeek.housemanager.replace
+import com.lovelessgeek.housemanager.replaceWhenNotCurrent
 import com.lovelessgeek.housemanager.ui.login.LoginActivity
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationFragment
 import com.lovelessgeek.housemanager.ui.main.profile.ProfileFragment
@@ -56,8 +56,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun showNotificationFragment() {
-        if (currentFragment is NotificationFragment) return
-        replace(
+        replaceWhenNotCurrent(
             R.id.fragment_container,
             NotificationFragment().apply {
                 onMenuButtonClicked = {
@@ -70,8 +69,7 @@ class MainActivity : BaseActivity() {
     private fun findDrawer() = findViewById<DrawerLayout>(R.id.main_drawer)
 
     private fun showProfileFragment() {
-        if (currentFragment is ProfileFragment) return
-        replace(
+        replaceWhenNotCurrent(
             R.id.fragment_container,
             ProfileFragment()
         )
