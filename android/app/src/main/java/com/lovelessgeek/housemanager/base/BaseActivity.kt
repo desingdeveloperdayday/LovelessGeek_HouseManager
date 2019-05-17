@@ -7,6 +7,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected open val logTag: String = this::class.java.simpleName
 
-    protected val currentFragment: Fragment?
+    val currentFragment: Fragment?
         get() = supportFragmentManager.fragments.firstOrNull { it?.isVisible == true }
 }

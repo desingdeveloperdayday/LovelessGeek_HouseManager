@@ -4,7 +4,7 @@ import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.data.RepositoryImpl
 import com.lovelessgeek.housemanager.data.db.LocalDatabase
 import com.lovelessgeek.housemanager.ui.main.MainViewModel
-import com.lovelessgeek.housemanager.ui.main.NotificationViewModel
+import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module

@@ -5,15 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main_drawer"
     tools:context=".ui.main.MainActivity"
     tools:openDrawer="start">
 
     <include layout="@layout/activity_main_layout" />
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/main_navigation"
         android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/activity_main_nav_header" />
+        app:headerLayout="@layout/activity_main_nav_header"
+        app:menu="@menu/menu_main" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager.ui.main
+package com.lovelessgeek.housemanager.ui.main.notification
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.lovelessgeek.housemanager.base.event.SimpleEvent
 import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.data.db.TaskEntity
-import com.lovelessgeek.housemanager.ui.main.NotificationViewModel.State.Success
+import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Success
 import kotlinx.coroutines.launch
 import java.util.Date
 

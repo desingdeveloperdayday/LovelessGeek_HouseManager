@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager.ui.main
+package com.lovelessgeek.housemanager.ui.main.notification
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -8,10 +8,10 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BaseFragment
-import com.lovelessgeek.housemanager.setSupportActionBar
-import com.lovelessgeek.housemanager.ui.main.NotificationViewModel.State.Failure
-import com.lovelessgeek.housemanager.ui.main.NotificationViewModel.State.Loading
-import com.lovelessgeek.housemanager.ui.main.NotificationViewModel.State.Success
+import com.lovelessgeek.housemanager.ui.main.TaskListAdapter
+import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Failure
+import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Loading
+import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Success
 import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import kotlinx.android.synthetic.main.fragment_notification_content.*
 import kotlinx.android.synthetic.main.fragment_notification_layout.*
@@ -31,10 +31,10 @@ class NotificationFragment : BaseFragment() {
 
     private val vm: NotificationViewModel by viewModel()
 
+    var onMenuButtonClicked: (View) -> Unit = {}
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setSupportActionBar(bottom_app_bar)
 
         setupTaskList()
 
@@ -42,6 +42,8 @@ class NotificationFragment : BaseFragment() {
         fab_add_task.setOnClickListener {
             vm.onClickAdd()
         }
+
+        bottom_app_bar.setNavigationOnClickListener(onMenuButtonClicked)
 
         vm.state.observe(this) { state ->
             when (state) {
