@@ -1,20 +1,17 @@
-package com.lovelessgeek.housemanager.ui.main
+package com.lovelessgeek.housemanager.ui.newtask
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lovelessgeek.housemanager.R.id
-import com.lovelessgeek.housemanager.R.layout
+import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.data.db.TaskEntity
 import com.lovelessgeek.housemanager.shared.models.TaskType
-import com.lovelessgeek.housemanager.ui.main.TaskListAdapter.ViewHolder
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.lovelessgeek.housemanager.ui.newtask.GuidedTaskListAdapter.ViewHolder
 
-class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
+class GuidedTaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     private var onClickDelete: ((TaskEntity) -> Unit)? = null
 
@@ -27,7 +24,7 @@ class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(layout.item_task, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_task_guide, parent, false)
         return ViewHolder(view)
     }
 
@@ -37,17 +34,7 @@ class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
             TaskType.INSTANT -> {
                 //item as InstantTask
                 holder.taskName.text = item.name
-                holder.startsAt.text =
-                    SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(item.time)
             }
-        }
-        holder.deleteButton.setOnClickListener {
-            val task = mItems[position]
-            mItems.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, itemCount)
-
-            onClickDelete?.invoke(task)
         }
     }
 
@@ -69,8 +56,7 @@ class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
      * ViewHolder
      */
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val taskName: TextView = view.findViewById(id.tv_task_name)
-        val startsAt: TextView = view.findViewById(id.tv_task_starts_at)
-        val deleteButton: ImageButton = view.findViewById(id.ib_delete)
+        val taskName: TextView = view.findViewById(R.id.tv_task_name)
+        val taskRating: RatingBar = view.findViewById(R.id.task_rating)
     }
 }

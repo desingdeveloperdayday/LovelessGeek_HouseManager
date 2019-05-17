@@ -10,7 +10,7 @@ import com.lovelessgeek.housemanager.ui.login.LoginActivity
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Failure
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Loading
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Success
-import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
+import com.lovelessgeek.housemanager.ui.newtask.TaskGuideActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         vm.moveToNewTask.observe(this) {
-            val intent = Intent(this, NewTaskActivity::class.java)
+            val intent = Intent(this, TaskGuideActivity::class.java)
             startActivityForResult(
                 intent,
                 RequestCode.NEW_TASK
@@ -84,8 +84,8 @@ class MainActivity : AppCompatActivity() {
             RequestCode.NEW_TASK -> {
                 if (resultCode == RESULT_OK) {
                     data?.let {
-                        val taskName = it.getStringExtra(NewTaskActivity.KEY_TASK_NAME)
-                        val date = it.getLongExtra(NewTaskActivity.KEY_DATE, 0)
+                        val taskName = it.getStringExtra(TaskGuideActivity.KEY_TASK_NAME)
+                        val date = it.getLongExtra(TaskGuideActivity.KEY_DATE, 0)
                         vm.addNewTask(taskName, date)
                     }
                 }

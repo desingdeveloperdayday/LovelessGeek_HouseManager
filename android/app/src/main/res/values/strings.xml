@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">HouseManager</string>
     <string name="no_name">이름 없음</string>
+
+    <string name="title_activity_task_guide">집안일가이드</string>
+
+    <string name="task_cleaning">청소</string>
+    <string name="task_dish_washing">설거지</string>
+    <string name="task_bathroom">화장실</string>
+    <string name="task_laundry">빨래</string>
+    <string name="task_waste_sorting">분리수거</string>
+    <string name="task_tidy_up">정리</string>
+    <string name="task_etc">기타</string>
 </resources>
