@@ -12,6 +12,8 @@ import com.lovelessgeek.housemanager.replaceWhenNotCurrent
 import com.lovelessgeek.housemanager.ui.login.LoginActivity
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationFragment
 import com.lovelessgeek.housemanager.ui.main.profile.ProfileFragment
+import com.lovelessgeek.housemanager.ui.main.report.ReportFragment
+import com.lovelessgeek.housemanager.ui.main.setting.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -48,6 +50,8 @@ class MainActivity : BaseActivity() {
         when (item.itemId) {
             R.id.main_notifiation -> showNotificationFragment()
             R.id.main_profile -> showProfileFragment()
+            R.id.main_report -> showReportFragment()
+            R.id.main_settings -> showSettingsFragment()
             else -> return false
         }
 
@@ -72,6 +76,20 @@ class MainActivity : BaseActivity() {
         replaceWhenNotCurrent(
             R.id.fragment_container,
             ProfileFragment()
+        )
+    }
+
+    private fun showReportFragment() {
+        replaceWhenNotCurrent(
+            R.id.fragment_container,
+            ReportFragment()
+        )
+    }
+
+    private fun showSettingsFragment() {
+        replaceWhenNotCurrent(
+            R.id.fragment_container,
+            SettingsFragment()
         )
     }
 }
