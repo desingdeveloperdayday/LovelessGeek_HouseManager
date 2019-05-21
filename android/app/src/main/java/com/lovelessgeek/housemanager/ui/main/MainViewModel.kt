@@ -22,6 +22,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val moveToNewTask: LiveData<SimpleEvent>
         get() = _moveToNewTask
 
+    private val _moveToGuideTask = MutableLiveData<SimpleEvent>()
+    val moveToGuideTask: LiveData<SimpleEvent>
+        get() = _moveToGuideTask
+
     private val _state = MutableLiveData<MainState>()
     val state: LiveData<MainState>
         get() = _state
@@ -64,6 +68,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
 
     fun onClickAdd() {
         _moveToNewTask.value = SimpleEvent()
+    }
+
+    fun onClickGuide() {
+        _moveToGuideTask.value = SimpleEvent()
     }
 
     // 이렇게 하는게 좋을지 확신이 없다..

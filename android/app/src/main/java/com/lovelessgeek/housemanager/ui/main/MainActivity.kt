@@ -10,6 +10,7 @@ import com.lovelessgeek.housemanager.ui.login.LoginActivity
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Failure
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Loading
 import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Success
+import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import com.lovelessgeek.housemanager.ui.newtask.TaskGuideActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         fab_add_task.setOnClickListener {
             vm.onClickAdd()
         }
+        fab_guided_task.setOnClickListener { vm.onClickGuide() }
 
         vm.backToLogin.observe(this) {
             it.runIfNotHandled {
@@ -57,11 +59,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         vm.moveToNewTask.observe(this) {
-            val intent = Intent(this, TaskGuideActivity::class.java)
+            val intent = Intent(this, NewTaskActivity::class.java)
             startActivityForResult(
                 intent,
                 RequestCode.NEW_TASK
             )
+        }
+
+        vm.moveToGuideTask.observe(this) {
+            val intent = Intent(this, TaskGuideActivity::class.java)
+            startActivityForResult(intent, RequestCode.NEW_TASK)
         }
     }
 

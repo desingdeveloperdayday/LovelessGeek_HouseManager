@@ -1,8 +1,6 @@
 package com.lovelessgeek.housemanager.ui.newtask
 
-import android.content.Intent
 import android.os.Bundle
-import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.R.layout
 import com.lovelessgeek.housemanager.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_new_task.*
@@ -19,8 +17,9 @@ class NewTaskActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_new_task)
 
-        btn_create_task.setOnClickListener {
+        btn_add_task.setOnClickListener {
             val calendar = Calendar.getInstance()
+            /*
             calendar.set(
                 dp_task_starts_at.year,
                 dp_task_starts_at.month,
@@ -33,6 +32,7 @@ class NewTaskActivity : BaseActivity() {
             intent.putExtra(KEY_TASK_NAME, taskName)
             intent.putExtra(KEY_DATE, calendar.timeInMillis)
             setResult(RESULT_OK, intent)
+            */
             finish()
         }
     }

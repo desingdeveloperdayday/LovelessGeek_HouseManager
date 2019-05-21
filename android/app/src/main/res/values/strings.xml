@@ -2,7 +2,10 @@
     <string name="app_name">HouseManager</string>
     <string name="no_name">이름 없음</string>
 
+    <string name="title_activity_new_task">할 일 입력</string>
     <string name="title_activity_task_guide">집안일가이드</string>
+    
+    <string name="tag_confirm">확인</string>
 
     <string name="task_cleaning">청소</string>
     <string name="task_dish_washing">설거지</string>
