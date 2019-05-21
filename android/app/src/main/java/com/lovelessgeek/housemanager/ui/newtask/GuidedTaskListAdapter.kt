@@ -32,8 +32,10 @@ class GuidedTaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
         val item = mItems[position]
         when (item.type) {
             TaskType.INSTANT -> {
-                //item as InstantTask
+                // TODO: item as InstantTask
+                holder.taskCategory.text = item.type
                 holder.taskName.text = item.name
+                holder.taskRating.rating = 2.5f
             }
         }
     }
@@ -56,6 +58,7 @@ class GuidedTaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
      * ViewHolder
      */
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val taskCategory: TextView = view.findViewById(R.id.tv_category)
         val taskName: TextView = view.findViewById(R.id.tv_task_name)
         val taskRating: RatingBar = view.findViewById(R.id.task_rating)
     }
