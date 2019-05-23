@@ -13,9 +13,9 @@ data class Task(
     val time: Date,
     val isComplete: Boolean = false,
     val isRepeat: Boolean = false,
-    val period: Long = PERIOD_NO_REPEAT
+    val period: Int = PERIOD_NO_REPEAT
 ) {
     companion object {
-        const val PERIOD_NO_REPEAT = 0L
+        const val PERIOD_NO_REPEAT = 0
     }
 }
