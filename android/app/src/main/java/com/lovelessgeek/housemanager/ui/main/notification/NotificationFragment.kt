@@ -8,6 +8,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BaseFragment
+import com.lovelessgeek.housemanager.ext.setItemMargin
 import com.lovelessgeek.housemanager.ui.main.TaskListAdapter
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Failure
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Loading
@@ -16,6 +17,7 @@ import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import kotlinx.android.synthetic.main.fragment_notification_content.*
 import kotlinx.android.synthetic.main.fragment_notification_layout.*
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class NotificationFragment : BaseFragment() {
 
@@ -85,6 +87,7 @@ class NotificationFragment : BaseFragment() {
         notification_list.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
+            setItemMargin(16)
         }
 
         // Task RecyclerView
