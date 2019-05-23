@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lovelessgeek.housemanager.R.id
-import com.lovelessgeek.housemanager.R.layout
+import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.data.db.TaskEntity
 import com.lovelessgeek.housemanager.shared.models.TaskType
 import com.lovelessgeek.housemanager.ui.main.TaskListAdapter.ViewHolder
@@ -23,13 +22,13 @@ class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
     override fun getItemCount(): Int = mItems.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(layout.item_task, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mItems[position]
-        when (item.type) {
+        when (TaskType.valueOf(item.type)) {
             TaskType.INSTANT -> {
                 //item as InstantTask
                 holder.taskName.text = item.name
@@ -65,8 +64,8 @@ class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
      * ViewHolder
      */
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val taskName: TextView = view.findViewById(id.tv_task_name)
-        val startsAt: TextView = view.findViewById(id.tv_task_starts_at)
-        val deleteButton: ImageButton = view.findViewById(id.ib_delete)
+        val taskName: TextView = view.findViewById(R.id.tv_task_name)
+        val startsAt: TextView = view.findViewById(R.id.tv_task_starts_at)
+        val deleteButton: ImageButton = view.findViewById(R.id.ib_delete)
     }
 }
