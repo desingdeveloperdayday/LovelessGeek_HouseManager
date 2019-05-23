@@ -1,9 +1,9 @@
 package com.lovelessgeek.housemanager.data
 
-import com.lovelessgeek.housemanager.data.db.TaskEntity
+import com.lovelessgeek.housemanager.shared.models.Task
 
 interface Repository {
-    suspend fun loadAllTasks(): List<TaskEntity>
-    suspend fun addNewTask(task: TaskEntity)
-    suspend fun deleteTask(task: TaskEntity)
+    suspend fun loadAllTasks(): List<Task>
+    suspend fun addNewTask(task: Task)
+    suspend fun deleteTask(task: Task)
 }

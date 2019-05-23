@@ -82,10 +82,9 @@ class NotificationFragment : BaseFragment() {
     }
 
     private fun setupTaskList() {
-        todo_recycler_view.apply {
+        notification_list.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
-            setEmptyView(empty_layout)
         }
 
         // Task RecyclerView

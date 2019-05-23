@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:elevation="8dp"
+        app:fabAlignmentMode="end"
         app:navigationIcon="@drawable/ic_round_menu" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

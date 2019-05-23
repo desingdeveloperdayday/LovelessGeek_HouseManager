@@ -6,7 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lovelessgeek.housemanager.base.event.SimpleEvent
 import com.lovelessgeek.housemanager.data.Repository
-import com.lovelessgeek.housemanager.data.db.TaskEntity
+import com.lovelessgeek.housemanager.shared.models.Category
+import com.lovelessgeek.housemanager.shared.models.Task
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Success
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -26,8 +27,8 @@ class NotificationViewModel(
     sealed class State {
         object Loading : State()
         data class Success(
-            val tasks: List<TaskEntity>? = null,
-            val newTask: TaskEntity? = null
+            val tasks: List<Task>? = null,
+            val newTask: Task? = null
         ) : State()
 
         object Failure : State()
@@ -55,13 +56,15 @@ class NotificationViewModel(
         _state.postValue(Success(newTask = task))
     }
 
-    private fun makeTaskFromIntent(taskName: String, date: Long) = TaskEntity(
+    // Assign category, isRepeat
+    private fun makeTaskFromIntent(taskName: String, date: Long) = Task(
         id = System.currentTimeMillis().toString(),
         name = taskName,
-        time = Date(date)
+        time = Date(date),
+        category = Category("default")
     )
 
-    fun onClickDeleteTask(taskEntity: TaskEntity) = viewModelScope.launch {
+    fun onClickDeleteTask(taskEntity: Task) = viewModelScope.launch {
         repository.deleteTask(taskEntity)
     }
 
