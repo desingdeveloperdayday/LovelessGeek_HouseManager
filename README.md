@@ -1,6 +1,6 @@
-# House Manager API
+# House Manager
 
-DDD 2기 애정결핍덕후팀의 House Manager(가제) API
+DDD 2기 애정결핍덕후팀의 House Manager(가제)
 
 
 
@@ -189,12 +189,3 @@ Result:
 
 집안일을 나타내는 객체입니다.
 
-
-
-### TODO
-
-앞으로 할 일을 우선순위가 높은 순서대로 나열합니다.
-
-- [ ] RDS 연결, 실제 Database
-
-- [ ] JWT Authentication
