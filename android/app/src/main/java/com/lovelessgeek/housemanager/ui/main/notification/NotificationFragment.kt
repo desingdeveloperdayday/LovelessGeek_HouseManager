@@ -4,11 +4,13 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BaseFragment
 import com.lovelessgeek.housemanager.ext.setItemMargin
+import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.ui.main.TaskListAdapter
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Failure
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Loading
@@ -17,7 +19,6 @@ import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import kotlinx.android.synthetic.main.fragment_notification_content.*
 import kotlinx.android.synthetic.main.fragment_notification_layout.*
 import org.koin.android.viewmodel.ext.android.viewModel
-
 
 class NotificationFragment : BaseFragment() {
 
@@ -54,6 +55,7 @@ class NotificationFragment : BaseFragment() {
                 }
                 is Success -> {
                     state.tasks?.let(taskAdapter::addAll)
+                    state.categories?.let(this::setupCategorySpinner)
                     state.newTask?.let(taskAdapter::add)
                 }
             }
@@ -94,5 +96,16 @@ class NotificationFragment : BaseFragment() {
         taskAdapter.onClickDelete {
             vm.onClickDeleteTask(it)
         }
+    }
+
+    private fun setupCategorySpinner(categories: List<Category>) {
+        categories
+            .map { category -> category.name }
+            .let {
+                category_spinner.adapter =
+                    ArrayAdapter(context, android.R.layout.simple_spinner_item, it).apply {
+                        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    }
+            }
     }
 }

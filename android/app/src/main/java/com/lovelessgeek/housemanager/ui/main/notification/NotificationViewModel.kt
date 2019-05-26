@@ -28,6 +28,7 @@ class NotificationViewModel(
         object Loading : State()
         data class Success(
             val tasks: List<Task>? = null,
+            val categories: List<Category>? = null,
             val newTask: Task? = null
         ) : State()
 
@@ -35,14 +36,16 @@ class NotificationViewModel(
     }
 
     init {
-        loadAllTasks()
+        loadData()
     }
 
-    private fun loadAllTasks() = viewModelScope.launch {
-        repository.loadAllTasks().let { tasks ->
-            // Should use postValue() here, because it is not in main thread.
-            _state.postValue(Success(tasks = tasks))
-        }
+    private fun loadData() = viewModelScope.launch {
+        _state.postValue(
+            Success(
+                tasks = repository.loadAllTasks(),
+                categories = repository.loadCategories()
+            )
+        )
     }
 
     fun onClickAdd() {
