@@ -27,11 +27,14 @@ abstract class LocalDatabase : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context): LocalDatabase {
-            return Room.databaseBuilder(
-                context.applicationContext,
-                LocalDatabase::class.java,
-                "HouseManager.db"
-            ).build()
+            return Room
+                .databaseBuilder(
+                    context.applicationContext,
+                    LocalDatabase::class.java,
+                    "HouseManager.db"
+                )
+                .fallbackToDestructiveMigration()
+                .build()
         }
     }
 }
