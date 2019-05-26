@@ -1,6 +1,5 @@
 package com.lovelessgeek.housemanager.data.db
 
-import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Task
 
 object TaskMapper : Mapper<Task, TaskEntity> {
@@ -8,6 +7,7 @@ object TaskMapper : Mapper<Task, TaskEntity> {
         return TaskEntity(
             id = item.id,
             name = item.name,
+            category = item.category,
             time = item.time
         )
     }
@@ -16,7 +16,7 @@ object TaskMapper : Mapper<Task, TaskEntity> {
     override fun fromEntity(entity: TaskEntity): Task {
         return Task(
             id = entity.id,
-            category = Category.Default,
+            category = entity.category,
             name = entity.name,
             time = entity.time
         )
