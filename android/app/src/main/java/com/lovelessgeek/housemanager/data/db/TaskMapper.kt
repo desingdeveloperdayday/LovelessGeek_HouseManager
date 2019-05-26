@@ -16,7 +16,7 @@ object TaskMapper : Mapper<Task, TaskEntity> {
     override fun fromEntity(entity: TaskEntity): Task {
         return Task(
             id = entity.id,
-            category = Category.default,
+            category = Category.Default,
             name = entity.name,
             time = entity.time
         )

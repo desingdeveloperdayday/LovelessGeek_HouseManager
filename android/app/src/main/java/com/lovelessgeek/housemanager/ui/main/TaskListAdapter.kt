@@ -1,11 +1,17 @@
 package com.lovelessgeek.housemanager.ui.main
 
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.databinding.ItemTaskBinding
 import com.lovelessgeek.housemanager.ext.goneIf
 import com.lovelessgeek.housemanager.ext.inflateBinding
+import com.lovelessgeek.housemanager.shared.models.Category
+import com.lovelessgeek.housemanager.shared.models.Category.Cleaning
+import com.lovelessgeek.housemanager.shared.models.Category.Default
+import com.lovelessgeek.housemanager.shared.models.Category.Laundry
+import com.lovelessgeek.housemanager.shared.models.Category.Trash
 import com.lovelessgeek.housemanager.shared.models.Task
 import com.lovelessgeek.housemanager.ui.main.TaskListAdapter.ViewHolder
 import java.text.SimpleDateFormat
@@ -57,11 +63,12 @@ class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
     inner class ViewHolder(private val binding: ItemTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        // TODO: Icon, Progress
+        // TODO: Progress
         fun bind(task: Task) {
             with(binding) {
                 nameText.text = task.name
-                categoryText.text = task.category.name
+                categoryText.text = task.category.readableName
+                icon.setImageResource(categoryIcon(task.category))
 
                 repeatIcon.goneIf(!task.isRepeat)
                 periodText.goneIf(!task.isRepeat)
@@ -69,6 +76,14 @@ class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
                 if (task.isRepeat)
                     periodText.text = task.period.toReadableDateString()
             }
+        }
+
+        @DrawableRes
+        private fun categoryIcon(category: Category): Int = when (category) {
+            Default -> R.drawable.ic_vacuum_cleaner
+            Trash -> R.drawable.ic_category_trash
+            Cleaning -> R.drawable.ic_category_cleaning
+            Laundry -> R.drawable.ic_category_laundry
         }
 
         // TODO: 이쁘게 해주는 라이브러리 있음

@@ -100,7 +100,7 @@ class NotificationFragment : BaseFragment() {
 
     private fun setupCategorySpinner(categories: List<Category>) {
         categories
-            .map { category -> category.name }
+            .map { category -> category.readableName }
             .let {
                 category_spinner.adapter =
                     ArrayAdapter(context, android.R.layout.simple_spinner_item, it).apply {

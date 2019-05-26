@@ -59,12 +59,12 @@ class NotificationViewModel(
         _state.postValue(Success(newTask = task))
     }
 
-    // Assign category, isRepeat
+    // TODO: Assign category, isRepeat
     private fun makeTaskFromIntent(taskName: String, date: Long) = Task(
         id = System.currentTimeMillis().toString(),
         name = taskName,
         time = Date(date),
-        category = Category("default")
+        category = Category.random()
     )
 
     fun onClickDeleteTask(taskEntity: Task) = viewModelScope.launch {

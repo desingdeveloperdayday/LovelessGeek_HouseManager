@@ -29,6 +29,6 @@ class RepositoryImpl(db: LocalDatabase) : Repository {
 
     // TODO: Remove when network is done.
     private fun categoryList(): List<Category> {
-        return listOf("빨래", "부엌청소", "쓰레기").map(::Category)
+        return Category.values().toList()
     }
 }

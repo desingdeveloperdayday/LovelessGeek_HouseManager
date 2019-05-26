@@ -1,9 +1,14 @@
 package com.lovelessgeek.housemanager.shared.models
 
-data class Category(
-    val name: String
-) {
+enum class Category(val readableName: String) {
+    Default("분류 없음"),
+    Trash("쓰레기"),
+    Cleaning("부엌청소"),
+    Laundry("빨래");
+
     companion object {
-        val default = Category("default")
+        fun random(): Category {
+            return values().random()
+        }
     }
 }
