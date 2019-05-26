@@ -27,6 +27,7 @@
         android:background="@drawable/item_circle"
         android:elevation="12dp"
         android:src="@drawable/ic_add"
+        app:tint="@color/white"
         app:fabSize="normal"
         app:layout_anchor="@+id/bottom_app_bar" />
 
