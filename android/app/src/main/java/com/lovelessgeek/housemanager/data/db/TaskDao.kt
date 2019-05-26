@@ -5,8 +5,7 @@ import androidx.room.Delete
 import androidx.room.Query
 
 @Dao
-abstract class TaskDao :
-    BaseDao<TaskEntity> {
+abstract class TaskDao : BaseDao<TaskEntity> {
 
     @Delete
     abstract suspend fun deleteTask(task: TaskEntity)

@@ -3,22 +3,22 @@ package com.lovelessgeek.housemanager.data.db
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Task
 
-object TaskMapper {
-    fun toEntity(task: Task): TaskEntity {
+object TaskMapper : Mapper<Task, TaskEntity> {
+    override fun toEntity(item: Task): TaskEntity {
         return TaskEntity(
-            id = task.id,
-            name = task.name,
-            time = task.time
+            id = item.id,
+            name = item.name,
+            time = item.time
         )
     }
 
     // TODO: 추가
-    fun fromEntity(task: TaskEntity): Task {
+    override fun fromEntity(entity: TaskEntity): Task {
         return Task(
-            id = task.id,
+            id = entity.id,
             category = Category.default,
-            name = task.name,
-            time = task.time
+            name = entity.name,
+            time = entity.time
         )
     }
 }
