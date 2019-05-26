@@ -75,6 +75,10 @@ class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
                 if (task.isRepeat)
                     periodText.text = task.period.toReadableDateString()
+
+                // Temporary
+                taskProgress.max = 100
+                taskProgress.progress = (0..100).random()
             }
         }
 
