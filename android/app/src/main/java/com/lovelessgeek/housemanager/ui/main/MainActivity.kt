@@ -2,40 +2,41 @@ package com.lovelessgeek.housemanager.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.MenuItem
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.lovelessgeek.housemanager.R.layout
+import com.lovelessgeek.housemanager.R
+import com.lovelessgeek.housemanager.base.BaseActivity
+import com.lovelessgeek.housemanager.replaceWhenNotCurrent
 import com.lovelessgeek.housemanager.ui.login.LoginActivity
-import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Failure
-import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Loading
-import com.lovelessgeek.housemanager.ui.main.MainViewModel.MainState.Success
-import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
+import com.lovelessgeek.housemanager.ui.main.notification.NotificationFragment
+import com.lovelessgeek.housemanager.ui.main.profile.ProfileFragment
+import com.lovelessgeek.housemanager.ui.main.report.ReportFragment
+import com.lovelessgeek.housemanager.ui.main.setting.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
-
-    private val taskAdapter = TaskListAdapter()
+class MainActivity : BaseActivity() {
 
     private val vm: MainViewModel by viewModel()
 
-    // FIXME
-    object RequestCode {
-        const val NEW_TASK = 0x0001
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layout.activity_main)
+        setContentView(R.layout.activity_main)
 
-        setupTaskList()
+        setupNavigation()
 
-        // Fab
-        fab_add_task.setOnClickListener {
-            vm.onClickAdd()
-        }
+        observeState()
 
+        showNotificationFragment()
+    }
+
+    private fun setupNavigation() {
+        main_navigation.setNavigationItemSelectedListener(this::handleNavMenuItem)
+    }
+
+    private fun observeState() {
         vm.backToLogin.observe(this) {
             it.runIfNotHandled {
                 val intent = Intent(this, LoginActivity::class.java)
@@ -43,53 +44,52 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
-
-        vm.state.observe(this) { state ->
-            when (state) {
-                Loading, Failure -> {
-                    TODO()
-                }
-                is Success -> {
-                    state.tasks?.let(taskAdapter::addAll)
-                    state.newTask?.let(taskAdapter::add)
-                }
-            }
-        }
-
-        vm.moveToNewTask.observe(this) {
-            val intent = Intent(this, NewTaskActivity::class.java)
-            startActivityForResult(
-                intent,
-                RequestCode.NEW_TASK
-            )
-        }
     }
 
-    private fun setupTaskList() {
-        // Task RecyclerView
-        taskAdapter.onClickDelete {
-            vm.onClickDeleteTask(it)
+    private fun handleNavMenuItem(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.main_notifiation -> showNotificationFragment()
+            R.id.main_profile -> showProfileFragment()
+            R.id.main_report -> showReportFragment()
+            R.id.main_settings -> showSettingsFragment()
+            else -> return false
         }
 
-        todo_recycler_view.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = taskAdapter
-            setEmptyView(empty_layout)
-        }
+        main_drawer.closeDrawer(GravityCompat.START)
+        return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            RequestCode.NEW_TASK -> {
-                if (resultCode == RESULT_OK) {
-                    data?.let {
-                        val taskName = it.getStringExtra(NewTaskActivity.KEY_TASK_NAME)
-                        val date = it.getLongExtra(NewTaskActivity.KEY_DATE, 0)
-                        vm.addNewTask(taskName, date)
-                    }
+    private fun showNotificationFragment() {
+        replaceWhenNotCurrent(
+            R.id.fragment_container,
+            NotificationFragment().apply {
+                onMenuButtonClicked = {
+                    findDrawer()?.openDrawer(GravityCompat.START)
                 }
             }
-        }
+        )
+    }
+
+    private fun findDrawer() = findViewById<DrawerLayout>(R.id.main_drawer)
+
+    private fun showProfileFragment() {
+        replaceWhenNotCurrent(
+            R.id.fragment_container,
+            ProfileFragment()
+        )
+    }
+
+    private fun showReportFragment() {
+        replaceWhenNotCurrent(
+            R.id.fragment_container,
+            ReportFragment()
+        )
+    }
+
+    private fun showSettingsFragment() {
+        replaceWhenNotCurrent(
+            R.id.fragment_container,
+            SettingsFragment()
+        )
     }
 }

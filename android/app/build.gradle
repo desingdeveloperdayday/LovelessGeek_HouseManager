@@ -25,6 +25,9 @@ android {
         targetCompatibility = '1.8'
     }
     buildToolsVersion = '28.0.3'
+    dataBinding {
+        enabled true
+    }
 }
 
 dependencies {
@@ -32,6 +35,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Version.kotlin}"
     implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutine}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Version.coroutineAndroid}"
 
     implementation "org.koin:koin-android:${Version.koin}"
     implementation "org.koin:koin-android-viewmodel:${Version.koin}"
@@ -43,13 +49,14 @@ dependencies {
     implementation "com.google.firebase:firebase-auth:16.0.4"
     implementation "com.google.android.gms:play-services-auth:16.0.1"
     implementation "androidx.recyclerview:recyclerview:1.0.0"
-    implementation "com.google.android.material:material:1.0.0"
+    implementation "com.google.android.material:material:1.1.0-alpha06"
 
     implementation "androidx.lifecycle:lifecycle-extensions:${Version.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${Version.lifecycle}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${Version.lifecycle}"
 
     implementation "androidx.room:room-runtime:${Version.room}"
+    implementation "androidx.room:room-ktx:${Version.room}"
     kapt "androidx.room:room-compiler:${Version.room}"
 
     implementation project(":shared")

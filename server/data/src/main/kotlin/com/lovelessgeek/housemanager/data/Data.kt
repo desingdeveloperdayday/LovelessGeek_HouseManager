@@ -4,17 +4,23 @@ import com.lovelessgeek.housemanager.shared.models.InstantTask
 import com.lovelessgeek.housemanager.shared.models.Task
 import com.lovelessgeek.housemanager.shared.models.User
 import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.util.Date
+
+private fun getDate(initializer: (LocalDateTime).() -> Unit = {}): Date {
+    return Date(LocalDateTime.now().apply(initializer).toEpochSecond(ZoneOffset.UTC))
+}
 
 // TODO: replace with databases
 internal val task1 = InstantTask(
     id = "1",
     name = "청소하기",
-    time = LocalDateTime.now().plusHours(2L)
+    time = getDate { plusHours(2L) }
 )
 internal val task2 = InstantTask(
     id = "2",
     name = "세탁하기",
-    time = LocalDateTime.now().plusDays(1L)
+    time = getDate { plusDays(1L) }
 )
 internal val tasks: List<Task> = listOf(
     task1,
