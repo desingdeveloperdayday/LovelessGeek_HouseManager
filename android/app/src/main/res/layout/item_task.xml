@@ -23,6 +23,30 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:progress="50" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/task_progress"
+            app:layout_constraintStart_toStartOf="@+id/task_progress"
+            app:layout_constraintTop_toTopOf="@+id/task_progress"
+            tools:text="4일" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textColor="#0074E1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/task_progress"
+            app:layout_constraintEnd_toEndOf="@+id/task_progress"
+            app:layout_constraintTop_toTopOf="@+id/task_progress"
+            tools:text="D-3" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/detail_container"
             android:layout_width="0dp"
@@ -34,41 +58,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/task_progress">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guide_content_start"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="92dp" />
-
             <ImageView
                 android:id="@+id/icon"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:layout_marginBottom="18dp"
+                android:layout_marginStart="18dp"
                 android:src="@drawable/ic_vacuum_cleaner"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/guide_content_start"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/category_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
+                android:layout_marginStart="18dp"
                 android:textColor="#80000000"
-                app:layout_constraintStart_toStartOf="@+id/guide_content_start"
+                app:layout_constraintBottom_toTopOf="@+id/name_text"
+                app:layout_constraintStart_toEndOf="@+id/icon"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
                 tools:text="부엌청소" />
 
             <TextView
                 android:id="@+id/name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="4dp"
                 android:textColor="#D9000000"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/guide_content_start"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/icon"
                 app:layout_constraintTop_toBottomOf="@+id/category_text"
                 tools:text="수세미 삶기" />
 
