@@ -1,8 +1,10 @@
 package com.lovelessgeek.housemanager.ui.main
 
 import android.content.Context
+import android.content.Intent
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.databinding.ItemTaskBinding
@@ -21,6 +23,7 @@ import com.lovelessgeek.housemanager.ui.diff
 import com.lovelessgeek.housemanager.ui.isOverDue
 import com.lovelessgeek.housemanager.ui.lessThanOneDayLeft
 import com.lovelessgeek.housemanager.ui.main.TaskListAdapter.ViewHolder
+import com.lovelessgeek.housemanager.ui.task.detail.DetailTaskActivity
 import com.lovelessgeek.housemanager.ui.toDayNumberOnly
 import com.lovelessgeek.housemanager.ui.toReadableDateString
 import com.lovelessgeek.housemanager.ui.toSecond
@@ -94,6 +97,11 @@ class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
                 }
 
                 setupProgress(task)
+
+                itemView.setOnClickListener {
+                    val intent = Intent(context, DetailTaskActivity::class.java)
+                    context.startActivity(intent)
+                }
             }
         }
 

@@ -10,6 +10,7 @@
 
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
+    <color name="blue">#0074E1</color>
 
     <color name="cool_black">#2B2B2B</color>
     <color name="light_black">#4D4D4D</color>
