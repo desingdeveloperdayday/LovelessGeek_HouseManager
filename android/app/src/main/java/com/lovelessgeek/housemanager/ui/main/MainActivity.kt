@@ -27,6 +27,7 @@ class MainActivity : BaseActivity() {
 
         setupNavigation()
 
+
         observeState()
 
         showNotificationFragment()
