@@ -162,6 +162,9 @@ class NotificationFragment : BaseFragment() {
         categories
             .map { category -> category.readableName }
             .let {
+                if (category_spinner.adapter != null)
+                    return
+
                 category_spinner.adapter =
                     ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, it).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
