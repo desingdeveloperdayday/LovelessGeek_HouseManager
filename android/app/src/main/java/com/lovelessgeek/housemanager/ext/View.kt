@@ -28,3 +28,11 @@ fun ViewGroup.inflate(@LayoutRes layoutId: Int, initializer: View.() -> Unit = {
 fun Context.inflate(@LayoutRes layoutId: Int, initializer: View.() -> Unit = {}): View {
     return LayoutInflater.from(this).inflate(layoutId, null, false).apply(initializer)
 }
+
+fun View.show() {
+    visibility = View.VISIBLE
+}
+
+fun View.hide(invisible: Boolean = false) {
+    visibility = if (invisible) View.INVISIBLE else View.GONE
+}

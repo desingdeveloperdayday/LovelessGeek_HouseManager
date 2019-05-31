@@ -3,8 +3,6 @@ package com.lovelessgeek.housemanager.ui
 import java.util.Calendar
 import java.util.Date
 
-// All inputs: ms
-
 fun Long.toSecond(): Int =
     this.div(1000).toInt()
 
@@ -21,8 +19,9 @@ fun Long.lessThanOneDayLeft(current: Long = Date().time): Boolean =
     diff(current) in 1 until 86400
 
 // TODO: 이쁘게 해주는 라이브러리 있음
-fun Long.toReadableDateString(): String {
-    val hour = 3600 * 1000
+// Unit: second
+fun Int.toReadableDateString(): String {
+    val hour = 3600
     val day = hour * 24
     val week = day * 7
 
@@ -32,6 +31,12 @@ fun Long.toReadableDateString(): String {
         "%d일".format(this / day)
     else
         "%d시간".format(this / hour)
+}
+
+// Unit: second
+fun Int.toDayNumberOnly(): Int {
+    val day = 3600 * 24
+    return this.div(day)
 }
 
 fun makeTime(

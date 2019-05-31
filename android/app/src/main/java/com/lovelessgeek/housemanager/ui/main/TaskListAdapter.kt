@@ -8,7 +8,9 @@ import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.databinding.ItemTaskBinding
 import com.lovelessgeek.housemanager.ext.getDrawableCompat
 import com.lovelessgeek.housemanager.ext.goneIf
+import com.lovelessgeek.housemanager.ext.hide
 import com.lovelessgeek.housemanager.ext.inflateBinding
+import com.lovelessgeek.housemanager.ext.show
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Category.Cleaning
 import com.lovelessgeek.housemanager.shared.models.Category.Default
@@ -19,7 +21,9 @@ import com.lovelessgeek.housemanager.ui.diff
 import com.lovelessgeek.housemanager.ui.isOverDue
 import com.lovelessgeek.housemanager.ui.lessThanOneDayLeft
 import com.lovelessgeek.housemanager.ui.main.TaskListAdapter.ViewHolder
+import com.lovelessgeek.housemanager.ui.toDayNumberOnly
 import com.lovelessgeek.housemanager.ui.toReadableDateString
+import com.lovelessgeek.housemanager.ui.toSecond
 import java.util.Date
 
 class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
@@ -82,7 +86,7 @@ class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
                 periodText.goneIf(!task.isRepeat)
 
                 if (task.isRepeat) {
-                    periodText.text = task.period.toReadableDateString()
+                    periodText.text = task.period.toSecond().toReadableDateString()
                 }
 
                 setupProgress(task)
@@ -100,14 +104,38 @@ class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
                 due.isOverDue() -> {
                     taskProgress.progressDrawable = overDueProgressDrawable
                     taskProgress.progress = taskProgress.max
+
+                    dayPassed.hide()
+                    dayLeft.hide()
+                    daySpecial.show()
+                    daySpecial.text = context.getString(
+                        R.string.task_day_overdue,
+                        current.diff(due).toReadableDateString()
+                    )
                 }
                 due.lessThanOneDayLeft() -> {
                     taskProgress.progressDrawable = todayProgressDrawable
                     taskProgress.progress = taskProgress.max
+
+                    dayPassed.hide()
+                    dayLeft.hide()
+                    daySpecial.show()
+                    daySpecial.text = context.getString(R.string.task_day_today)
                 }
                 else -> {
+                    val timePassed = current.diff(created)
+                    val timeLeft = due.diff(current)
+
                     taskProgress.progressDrawable = normalProgressDrawable
-                    taskProgress.progress = current.diff(created)
+                    taskProgress.progress = timePassed
+
+                    dayPassed.show()
+                    dayLeft.show()
+                    daySpecial.hide()
+
+                    dayPassed.text = timePassed.toReadableDateString()
+                    dayLeft.text =
+                        context.getString(R.string.task_day_left, timeLeft.toDayNumberOnly())
                 }
             }
         }

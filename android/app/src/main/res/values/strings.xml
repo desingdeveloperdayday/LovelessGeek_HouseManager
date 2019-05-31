@@ -6,4 +6,7 @@
     <string name="menu_report">리포트</string>
     <string name="menu_settings">설정</string>
     <string name="notification_title">할 일</string>
+    <string name="task_day_overdue">+%1$s</string>
+    <string name="task_day_today">TODAY!</string>
+    <string name="task_day_left">D-%1$d</string>
 </resources>
