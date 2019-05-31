@@ -64,7 +64,9 @@ class NotificationViewModel(
         id = System.currentTimeMillis().toString(),
         name = taskName,
         time = Date(date),
-        category = Category.random()
+        category = Category.random(),
+        isRepeat = true,
+        period = (1..14).random() * 86400000L
     )
 
     fun onClickDeleteTask(taskEntity: Task) = viewModelScope.launch {

@@ -11,5 +11,7 @@ data class TaskEntity(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     var category: Category,
     var name: String,
-    var time: Date = Date()
+    var time: Date = Date(),
+    var isRepeat: Boolean,
+    var period: Long
 )// : Task(type, id, name)
