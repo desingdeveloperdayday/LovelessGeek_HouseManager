@@ -36,6 +36,6 @@ fun makeTime(
     second: Int = 0
 ): Long {
     return Calendar.getInstance().apply {
-        set(2019, month, day, hour, minute, second)
+        set(2019, month - 1, day, hour, minute, second)
     }.time.time
 }
