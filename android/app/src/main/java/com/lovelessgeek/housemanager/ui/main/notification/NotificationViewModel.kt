@@ -195,4 +195,8 @@ class NotificationViewModel(
 
         _sortBy.postValue(sortMethod)
     }
+
+    fun sort(sortMethod: SortMethod) {
+        _sortBy.postValue(sortMethod)
+    }
 }

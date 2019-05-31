@@ -12,7 +12,9 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BaseFragment
+import com.lovelessgeek.housemanager.ext.hide
 import com.lovelessgeek.housemanager.ext.setItemMargin
+import com.lovelessgeek.housemanager.ext.show
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Failure
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Loading
@@ -75,8 +77,23 @@ class NotificationFragment : BaseFragment() {
 
         vm.showingType.observe(this) { showingType ->
             when (showingType) {
-                ShowingType.TODO -> vm.loadTodos()
-                ShowingType.COMPLETED -> vm.loadCompleted()
+                ShowingType.TODO -> {
+                    task_title_todo.setTextColor(textPrimary)
+                    task_title_completed.setTextColor(textPrimaryDisabled)
+                    sort_button.show()
+                    edit_button.hide()
+
+                    vm.loadTodos()
+                }
+                ShowingType.COMPLETED -> {
+                    task_title_todo.setTextColor(textPrimaryDisabled)
+                    task_title_completed.setTextColor(textPrimary)
+                    sort_button.hide()
+                    edit_button.show()
+
+                    vm.sort(SortMethod.DDAY)
+                    vm.loadCompleted()
+                }
             }
         }
 
@@ -118,14 +135,10 @@ class NotificationFragment : BaseFragment() {
 
     private fun setupButtons() {
         task_title_todo.setOnClickListener {
-            task_title_todo.setTextColor(textPrimary)
-            task_title_completed.setTextColor(textPrimaryDisabled)
             vm.onClickTodo()
         }
 
         task_title_completed.setOnClickListener {
-            task_title_completed.setTextColor(textPrimary)
-            task_title_todo.setTextColor(textPrimaryDisabled)
             vm.onClickCompleted()
         }
 
