@@ -12,6 +12,8 @@ data class TaskEntity(
     var category: Category,
     var name: String,
     var time: Date = Date(),
+    var isComplete: Boolean,
     var isRepeat: Boolean,
-    var period: Long
+    var period: Long,
+    var created: Date = Date()
 )// : Task(type, id, name)

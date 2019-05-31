@@ -13,7 +13,8 @@ data class Task(
     val time: Date,
     val isComplete: Boolean = false,
     val isRepeat: Boolean = false,
-    val period: Long = PERIOD_NO_REPEAT
+    val period: Long = PERIOD_NO_REPEAT,
+    var created: Date = Date()
 ) {
     companion object {
         const val PERIOD_NO_REPEAT = 0L

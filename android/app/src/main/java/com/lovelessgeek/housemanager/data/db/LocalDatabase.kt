@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.lovelessgeek.housemanager.data.db.util.DateConverter
 import com.lovelessgeek.housemanager.data.db.util.EnumConverter
 
-@Database(entities = [TaskEntity::class], version = 3, exportSchema = false)
+@Database(entities = [TaskEntity::class], version = 4, exportSchema = false)
 @TypeConverters(DateConverter::class, EnumConverter::class)
 abstract class LocalDatabase : RoomDatabase() {
     abstract fun getTaskDao(): TaskDao
