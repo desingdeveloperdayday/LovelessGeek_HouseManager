@@ -1,9 +1,7 @@
 package com.lovelessgeek.housemanager.ui
 
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 // All inputs: ms
 
@@ -24,8 +22,16 @@ fun Long.lessThanOneDayLeft(current: Long = Date().time): Boolean =
 
 // TODO: 이쁘게 해주는 라이브러리 있음
 fun Long.toReadableDateString(): String {
-    val dateFormat = SimpleDateFormat("dd일", Locale.KOREA)
-    return dateFormat.format(Date(this))
+    val hour = 3600 * 1000
+    val day = hour * 24
+    val week = day * 7
+
+    return if (this >= week)
+        "%d주".format(this / week)
+    else if (this >= day)
+        "%d일".format(this / day)
+    else
+        "%시간".format(this / hour)
 }
 
 fun makeTime(
