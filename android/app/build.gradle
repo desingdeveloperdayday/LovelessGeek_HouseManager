@@ -24,6 +24,11 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
     buildToolsVersion = '28.0.3'
     dataBinding {
         enabled true
@@ -43,6 +48,7 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:${Version.koin}"
 
     testImplementation "junit:junit:4.12"
+    testImplementation "io.kotlintest:kotlintest-runner-junit5:3.3.2"
     androidTestImplementation "androidx.test:runner:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
     implementation "com.google.firebase:firebase-core:16.0.4"
