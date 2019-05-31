@@ -4,7 +4,7 @@ import com.github.pgutkowski.kgraphql.KGraphQL
 import com.github.pgutkowski.kgraphql.schema.Schema
 import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.shared.converters.LocalDateTimeConverter
-import com.lovelessgeek.housemanager.shared.models.InstantTask
+import com.lovelessgeek.housemanager.shared.models.Task
 import com.lovelessgeek.housemanager.shared.models.TaskType
 import com.lovelessgeek.housemanager.shared.models.User
 import java.time.LocalDateTime
@@ -18,7 +18,7 @@ internal fun generateSchema(repository: Repository): Schema {
 
         // List of supported types
         type<User>()
-        type<InstantTask>()
+        type<Task>()
         enum<TaskType>()
 
         // Custom scalar types

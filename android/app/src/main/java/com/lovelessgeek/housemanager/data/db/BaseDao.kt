@@ -5,5 +5,5 @@ import androidx.room.OnConflictStrategy
 
 interface BaseDao<T> {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(vararg obj: T)
+    suspend fun insert(vararg obj: T)
 }

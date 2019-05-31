@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BaseActivity
 import com.lovelessgeek.housemanager.data.db.TaskEntity
+import com.lovelessgeek.housemanager.shared.models.Category
 import kotlinx.android.synthetic.main.activity_task_guide.*
 
 class TaskGuideActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener {
@@ -44,7 +45,7 @@ class TaskGuideActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
             adapter = taskAdapter
             layoutManager = LinearLayoutManager(this@TaskGuideActivity)
         }
-        taskAdapter.add(TaskEntity(id = "TASK_ID", name = "TASK NAME"))
+        taskAdapter.add(TaskEntity(id = "TASK_ID", name = "TASK NAME", category = Category.Default))
         taskAdapter.notifyDataSetChanged()
     }
 

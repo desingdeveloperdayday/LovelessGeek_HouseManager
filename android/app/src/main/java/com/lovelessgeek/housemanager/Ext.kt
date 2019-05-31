@@ -1,14 +1,32 @@
 package com.lovelessgeek.housemanager
 
+import androidx.annotation.IdRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
+import com.lovelessgeek.housemanager.base.BaseActivity
 
-inline fun <reified T : ViewModel> FragmentActivity.getViewModel(): T {
-    return ViewModelProviders.of(this).get(T::class.java)
+fun BaseActivity.replaceWhenNotCurrent(@IdRes containerId: Int, fragment: Fragment) {
+    replaceWhen(containerId, fragment) {
+        currentFragment?.javaClass != fragment::class.java
+    }
 }
 
-// Run and forget about it. Should not be used because of several leaks.
-fun runAndForget(block: () -> Unit) {
-    Thread(block).start()
+fun FragmentActivity.replaceWhen(
+    @IdRes containerId: Int, fragment: Fragment,
+    predicate: () -> Boolean
+) {
+    if (predicate())
+        replace(containerId, fragment)
+}
+
+fun FragmentActivity.replace(@IdRes containerId: Int, fragment: Fragment) {
+    supportFragmentManager.beginTransaction()
+        .replace(containerId, fragment)
+        .commitNow()
+}
+
+fun Fragment.setSupportActionBar(toolbar: Toolbar) {
+    (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
 }

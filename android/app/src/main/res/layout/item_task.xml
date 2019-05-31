@@ -1,83 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp">
+<layout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:layout_height="120dp"
+        android:clipToPadding="false"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp">
 
-        <ImageView
-            android:id="@+id/iv_category"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_outline_settings"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_task_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="NOTIFICATION NAME"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@id/iv_category"
-            app:layout_constraintTop_toTopOf="@id/iv_category" />
-
-        <TextView
-            android:id="@+id/tv_noti_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="사용 중"
-            app:layout_constraintStart_toStartOf="@id/tv_task_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_task_name" />
-
-        <!-- TODO: include -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ProgressBar
+            android:id="@+id/task_progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="16dp"
+            android:progressDrawable="@drawable/progress_task"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:progress="50" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/detail_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/background_task"
+            android:elevation="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_noti_status"
-            app:layout_constraintWidth_percent="0.8">
+            app:layout_constraintTop_toBottomOf="@+id/task_progress">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_content_start"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="92dp" />
 
             <ImageView
-                android:id="@+id/iv_sub_category_01"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_outline_settings"
+                android:id="@+id/icon"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="18dp"
+                android:src="@drawable/ic_vacuum_cleaner"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/guide_content_start"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/tv_task_starts_at"
+                android:id="@+id/category_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2019-04-29"
-                android:textSize="32sp"
-                app:layout_constraintBottom_toBottomOf="@id/iv_sub_category_01"
-                app:layout_constraintStart_toEndOf="@id/iv_sub_category_01" />
+                android:layout_marginTop="18dp"
+                android:textColor="#80000000"
+                app:layout_constraintStart_toStartOf="@+id/guide_content_start"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="부엌청소" />
+
+            <TextView
+                android:id="@+id/name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#D9000000"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/guide_content_start"
+                app:layout_constraintTop_toBottomOf="@+id/category_text"
+                tools:text="수세미 삶기" />
+
+            <ImageView
+                android:id="@+id/repeat_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_repeat"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/period_text"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/period_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="18dp"
+                android:textColor="#80000000"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2주"
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ImageButton
-            android:id="@+id/ib_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_twotone_delete_forever"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+</layout>

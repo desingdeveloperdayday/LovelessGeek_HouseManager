@@ -1,6 +1,7 @@
 object Version {
     const val kotlin = "1.3.21"
     const val coroutine = "1.2.1"
+    const val coroutineAndroid = "1.2.0"
     const val junit = "4.12"
 
     const val koin = "2.0.0-rc-1"

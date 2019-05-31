@@ -30,14 +30,14 @@ class GuidedTaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mItems[position]
-        when (item.type) {
-            TaskType.INSTANT -> {
+//        when (item.category) {
+//            TaskType.INSTANT -> {
                 // TODO: item as InstantTask
-                holder.taskCategory.text = item.type
+                holder.taskCategory.text = item.category.readableName
                 holder.taskName.text = item.name
                 holder.taskRating.rating = 2.5f
-            }
-        }
+//            }
+//        }
     }
 
     fun onClickDelete(onClickDelete: ((TaskEntity) -> Unit)?) {

@@ -5,4 +5,15 @@
     <color name="colorAccent">#FA7268</color>
 
     <color name="dark_gray">#C4C4C4</color>
+
+    <color name="progress_background">#E5FBFF</color>
+
+    <color name="white">@android:color/white</color>
+    <color name="black">@android:color/black</color>
+
+    <color name="cool_black">#2B2B2B</color>
+    <color name="light_black">#4D4D4D</color>
+    <color name="warm_white">#FFFDFB</color>
+
+    <color name="rough_white">#EEEEEE</color>
 </resources>
