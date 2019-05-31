@@ -12,7 +12,8 @@ object TaskMapper : Mapper<Task, TaskEntity> {
             isComplete = item.isComplete,
             isRepeat = item.isRepeat,
             period = item.period,
-            created = item.created
+            created = item.created,
+            completed = item.completed
         )
     }
 
@@ -26,7 +27,8 @@ object TaskMapper : Mapper<Task, TaskEntity> {
             isComplete = entity.isComplete,
             isRepeat = entity.isRepeat,
             period = entity.period,
-            created = entity.created
+            created = entity.created,
+            completed = entity.completed
         )
     }
 }

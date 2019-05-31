@@ -15,5 +15,6 @@ data class TaskEntity(
     var isComplete: Boolean,
     var isRepeat: Boolean,
     var period: Long,
-    var created: Date = Date()
+    var created: Date = Date(),
+    var completed: Date? = null
 )// : Task(type, id, name)
