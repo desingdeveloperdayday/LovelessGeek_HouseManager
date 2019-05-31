@@ -20,7 +20,7 @@ import com.lovelessgeek.housemanager.ui.isOverDue
 import com.lovelessgeek.housemanager.ui.lessThanOneDayLeft
 import com.lovelessgeek.housemanager.ui.main.TaskListAdapter.ViewHolder
 import com.lovelessgeek.housemanager.ui.toReadableDateString
-import com.lovelessgeek.housemanager.ui.toSecond
+import java.util.Date
 
 class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
@@ -83,26 +83,31 @@ class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
                 if (task.isRepeat) {
                     periodText.text = task.period.toReadableDateString()
-                    taskProgress.max = task.period.toSecond()
+                }
 
-                    task.time.time.let { due ->
-                        when {
-                            due.isOverDue() -> {
-                                taskProgress.progressDrawable = overDueProgressDrawable
-                                taskProgress.progress = taskProgress.max
-                            }
-                            due.lessThanOneDayLeft() -> {
-                                taskProgress.progressDrawable = todayProgressDrawable
-                                taskProgress.progress = taskProgress.max
-                            }
-                            else -> {
-                                taskProgress.progressDrawable = normalProgressDrawable
-                                taskProgress.progress = due.diff()
-                            }
-                        }
+                setupProgress(task)
+            }
+        }
 
-                    }
+        private fun ItemTaskBinding.setupProgress(task: Task) {
+            val created = task.created.time
+            val due = task.time.time
+            val current = Date().time
 
+            taskProgress.max = due.diff(created)
+
+            when {
+                due.isOverDue() -> {
+                    taskProgress.progressDrawable = overDueProgressDrawable
+                    taskProgress.progress = taskProgress.max
+                }
+                due.lessThanOneDayLeft() -> {
+                    taskProgress.progressDrawable = todayProgressDrawable
+                    taskProgress.progress = taskProgress.max
+                }
+                else -> {
+                    taskProgress.progressDrawable = normalProgressDrawable
+                    taskProgress.progress = current.diff(created)
                 }
             }
         }
