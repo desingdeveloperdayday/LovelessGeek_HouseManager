@@ -10,9 +10,15 @@ class RepositoryImpl(db: LocalDatabase) : Repository {
     private val taskDao: TaskDao = db.getTaskDao()
 
     override suspend fun loadAllTasks(): List<Task> {
-        return taskDao.loadAllTasks().map {
-            TaskMapper.fromEntity(it)
-        }
+        return taskDao.loadAllTasks().map(TaskMapper::fromEntity)
+    }
+
+    override suspend fun loadTodoTasks(): List<Task> {
+        return taskDao.loadTodoTasks().map(TaskMapper::fromEntity)
+    }
+
+    override suspend fun loadCompletedTasks(): List<Task> {
+        return taskDao.loadCompletedTasks().map(TaskMapper::fromEntity)
     }
 
     override suspend fun addNewTask(task: Task) {

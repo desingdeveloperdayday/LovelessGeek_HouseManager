@@ -13,6 +13,12 @@ abstract class TaskDao : BaseDao<TaskEntity> {
     @Query("SELECT * FROM task")
     abstract suspend fun loadAllTasks(): List<TaskEntity>
 
+    @Query("SELECT * FROM task WHERE isComplete = 0")
+    abstract suspend fun loadTodoTasks(): List<TaskEntity>
+
+    @Query("SELECT * FROM task WHERE isComplete = 1")
+    abstract suspend fun loadCompletedTasks(): List<TaskEntity>
+
     //@Query("SELECT * FROM task WHERE time > :time")
     //abstract fun loadTasksAfter(time: Date): List<TaskEntity>
 
