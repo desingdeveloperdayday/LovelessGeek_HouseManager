@@ -17,8 +17,8 @@
             <shape android:shape="rectangle">
                 <corners android:radius="@dimen/progress_corner_radius" />
                 <gradient
-                    android:endColor="#1BACFF"
-                    android:startColor="#10E7DC" />
+                    android:endColor="@color/dodger_blue"
+                    android:startColor="@color/bright_turquoise" />
             </shape>
         </scale>
     </item>
