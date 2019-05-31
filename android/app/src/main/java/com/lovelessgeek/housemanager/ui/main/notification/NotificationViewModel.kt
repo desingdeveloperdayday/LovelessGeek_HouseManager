@@ -9,6 +9,7 @@ import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Task
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Success
+import com.lovelessgeek.housemanager.ui.makeTime
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -23,6 +24,45 @@ class NotificationViewModel(
     private val _moveToNewTask = MutableLiveData<SimpleEvent>()
     val moveToNewTask: LiveData<SimpleEvent>
         get() = _moveToNewTask
+
+    private val mockData = listOf(
+        Task(
+            id = "1",
+            category = Category.random(),
+            name = "기한 지남",
+            isRepeat = true,
+            period = 86400000,
+            time = Date(makeTime(month = 5, day = 31, hour = 16)),
+            created = Date(makeTime(month = 5, day = 31, hour = 14))
+        ),
+        Task(
+            id = "2",
+            category = Category.random(),
+            name = "오늘",
+            isRepeat = true,
+            period = 86400000 * 3,
+            time = Date(makeTime(month = 6, day = 1, hour = 6)),
+            created = Date(makeTime(month = 5, day = 31, hour = 14))
+        ),
+        Task(
+            id = "3",
+            category = Category.random(),
+            name = "시간 조금 남음",
+            isRepeat = true,
+            period = 86400000 * 7,
+            time = Date(makeTime(month = 6, day = 2, hour = 2)),
+            created = Date(makeTime(month = 5, day = 28, hour = 14))
+        ),
+        Task(
+            id = "4",
+            category = Category.random(),
+            name = "시간 많이 남음",
+            isRepeat = true,
+            period = 86400000 * 20,
+            time = Date(makeTime(month = 6, day = 7, hour = 2)),
+            created = Date(makeTime(month = 5, day = 28, hour = 14))
+        )
+    )
 
     sealed class State {
         object Loading : State()
@@ -42,7 +82,7 @@ class NotificationViewModel(
     private fun loadData() = viewModelScope.launch {
         _state.postValue(
             Success(
-                tasks = repository.loadAllTasks(),
+                tasks = repository.loadAllTasks().takeIf { it.isNotEmpty() } ?: mockData,
                 categories = repository.loadCategories()
             )
         )
