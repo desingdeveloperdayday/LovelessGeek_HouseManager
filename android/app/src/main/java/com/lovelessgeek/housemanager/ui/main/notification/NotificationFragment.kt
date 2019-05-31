@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lovelessgeek.housemanager.R
@@ -16,6 +17,7 @@ import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Loading
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Success
 import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
+import com.lovelessgeek.housemanager.ui.newtask.TaskGuideActivity
 import kotlinx.android.synthetic.main.fragment_notification_content.*
 import kotlinx.android.synthetic.main.fragment_notification_layout.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -62,11 +64,33 @@ class NotificationFragment : BaseFragment() {
         }
 
         vm.moveToNewTask.observe(this) {
+            /*
             val intent = Intent(activity, NewTaskActivity::class.java)
             startActivityForResult(
                 intent,
                 RequestCode.NEW_TASK
             )
+            */
+            AlertDialog.Builder(requireActivity())
+                .setTitle(R.string.menu_add_task)
+                .setItems(R.array.menu_add_task_buttons) { dialog, which ->  
+                    when (which) {
+                        0 -> {  // 할 일 입력
+                            val intent = Intent(activity, NewTaskActivity::class.java)
+                            startActivityForResult(
+                                intent,
+                                RequestCode.NEW_TASK
+                            )
+                        }
+                        1 -> {  // 집안일 가이드
+                            val intent = Intent(activity, TaskGuideActivity::class.java)
+                            startActivityForResult(
+                                intent,
+                                RequestCode.NEW_TASK
+                            )
+                        }
+                    }
+                }.show()
         }
     }
 
