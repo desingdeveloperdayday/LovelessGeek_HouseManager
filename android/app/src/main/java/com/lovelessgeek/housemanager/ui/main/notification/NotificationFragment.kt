@@ -14,10 +14,10 @@ import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BaseFragment
 import com.lovelessgeek.housemanager.ext.setItemMargin
 import com.lovelessgeek.housemanager.shared.models.Category
-import com.lovelessgeek.housemanager.ui.main.TaskListAdapter
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Failure
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Loading
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Success
+import com.lovelessgeek.housemanager.ui.main.notification.adapter.TaskListAdapter
 import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import com.lovelessgeek.housemanager.ui.newtask.TaskGuideActivity
 import kotlinx.android.synthetic.main.fragment_notification_content.*
@@ -34,7 +34,8 @@ class NotificationFragment : BaseFragment() {
     override val layoutId: Int
         get() = R.layout.fragment_notification_layout
 
-    private val taskAdapter = TaskListAdapter()
+    private val taskAdapter =
+        TaskListAdapter()
 
     private val vm: NotificationViewModel by viewModel()
 
