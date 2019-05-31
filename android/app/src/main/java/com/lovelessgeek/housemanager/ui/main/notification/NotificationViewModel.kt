@@ -25,9 +25,49 @@ class NotificationViewModel(
     val showCategory: LiveData<Category>
         get() = _showCategory
 
+    private val _showingType = MutableLiveData<ShowingType>(ShowingType.TODO)
+    val showingType: LiveData<ShowingType>
+        get() = _showingType
+
     private val _moveToNewTask = MutableLiveData<SimpleEvent>()
     val moveToNewTask: LiveData<SimpleEvent>
         get() = _moveToNewTask
+
+    private val completedMockData = listOf(
+        Task(
+            id = "3",
+            category = Category.random(),
+            name = "시간 조금 남음",
+            isRepeat = true,
+            isComplete = true,
+            period = 86400000 * 7,
+            time = Date(makeTime(month = 6, day = 2, hour = 10)),
+            created = Date(makeTime(month = 5, day = 28, hour = 14)),
+            completed = Date(makeTime(month = 6, day = 1, hour = 15))
+        ),
+        Task(
+            id = "4",
+            category = Category.random(),
+            name = "시간 많이 남음",
+            isRepeat = true,
+            isComplete = true,
+            period = 86400000 * 20,
+            time = Date(makeTime(month = 6, day = 7, hour = 2)),
+            created = Date(makeTime(month = 5, day = 28, hour = 14)),
+            completed = Date(makeTime(month = 6, day = 2, hour = 18))
+        ),
+        Task(
+            id = "2",
+            category = Category.random(),
+            name = "오늘",
+            isRepeat = true,
+            isComplete = true,
+            period = 86400000 * 3,
+            time = Date(makeTime(month = 6, day = 1, hour = 2)),
+            created = Date(makeTime(month = 5, day = 31, hour = 14)),
+            completed = Date(makeTime(month = 5, day = 31, hour = 17))
+        )
+    )
 
     private val mockData = listOf(
         Task(
@@ -79,14 +119,20 @@ class NotificationViewModel(
         object Failure : State()
     }
 
-    init {
-        loadData()
-    }
-
-    private fun loadData() = viewModelScope.launch {
+    fun loadTodos() = viewModelScope.launch {
         _state.postValue(
             Success(
-                tasks = repository.loadAllTasks().takeIf { it.isNotEmpty() } ?: mockData,
+                tasks = repository.loadTodoTasks().takeIf { it.isNotEmpty() } ?: mockData,
+                categories = repository.loadCategories()
+            )
+        )
+    }
+
+    fun loadCompleted() = viewModelScope.launch {
+        _state.postValue(
+            Success(
+                tasks = repository.loadCompletedTasks().takeIf { it.isNotEmpty() }
+                    ?: completedMockData,
                 categories = repository.loadCategories()
             )
         )
@@ -124,5 +170,13 @@ class NotificationViewModel(
 
     fun onCategorySelected(category: Category) {
         _showCategory.postValue(category)
+    }
+
+    fun onClickTodo() {
+        _showingType.postValue(ShowingType.TODO)
+    }
+
+    fun onClickCompleted() {
+        _showingType.postValue(ShowingType.COMPLETED)
     }
 }

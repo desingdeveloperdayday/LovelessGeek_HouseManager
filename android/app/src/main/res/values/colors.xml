@@ -16,6 +16,7 @@
     <color name="surface">#FFFFFF</color>
     <color name="text_primary">#000000</color>
     <color name="text_primary_85">#D9000000</color>
+    <color name="text_primary_16">#28000000</color>
 
     <color name="text_secondary">#34495E</color>
     <color name="text_secondary_56">#8F34495E</color>

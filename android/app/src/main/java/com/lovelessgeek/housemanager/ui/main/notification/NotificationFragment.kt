@@ -40,6 +40,9 @@ class NotificationFragment : BaseFragment() {
 
     var onMenuButtonClicked: (View) -> Unit = {}
 
+    private val textPrimary: Int by lazy { requireContext().getColor(R.color.text_primary) }
+    private val textPrimaryDisabled: Int by lazy { requireContext().getColor(R.color.text_primary_16) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -48,11 +51,7 @@ class NotificationFragment : BaseFragment() {
         }
 
         setupTaskList()
-
-        // Fab
-        fab_add_task.setOnClickListener {
-            vm.onClickAdd()
-        }
+        setupButtons()
 
         bottom_app_bar.setNavigationOnClickListener(onMenuButtonClicked)
 
@@ -71,6 +70,13 @@ class NotificationFragment : BaseFragment() {
 
         vm.showCategory.observe(this) { category ->
             taskAdapter.showOnly(category)
+        }
+
+        vm.showingType.observe(this) { showingType ->
+            when (showingType) {
+                ShowingType.TODO -> vm.loadTodos()
+                ShowingType.COMPLETED -> vm.loadCompleted()
+            }
         }
 
         vm.moveToNewTask.observe(this) {
@@ -101,6 +107,25 @@ class NotificationFragment : BaseFragment() {
                         }
                     }
                 }.show()
+        }
+    }
+
+    private fun setupButtons() {
+        task_title_todo.setOnClickListener {
+            task_title_todo.setTextColor(textPrimary)
+            task_title_completed.setTextColor(textPrimaryDisabled)
+            vm.onClickTodo()
+        }
+
+        task_title_completed.setOnClickListener {
+            task_title_completed.setTextColor(textPrimary)
+            task_title_todo.setTextColor(textPrimaryDisabled)
+            vm.onClickCompleted()
+        }
+
+        // Fab
+        fab_add_task.setOnClickListener {
+            vm.onClickAdd()
         }
     }
 
