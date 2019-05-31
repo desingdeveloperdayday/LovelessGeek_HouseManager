@@ -71,6 +71,15 @@ class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
         val context: Context
             get() = itemView.context
 
+        private val cardBackgroundSky =
+            context.getDrawableCompat(R.drawable.card_background_sky)
+
+        private val cardBackgroundBlue =
+            context.getDrawableCompat(R.drawable.card_background_blue)
+
+        private val cardBackgroundRed =
+            context.getDrawableCompat(R.drawable.card_background_red)
+
         private val normalProgressDrawable =
             context.getDrawableCompat(R.drawable.progress_task_normal)
 
@@ -106,6 +115,7 @@ class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
 
             when {
                 due.isOverDue() -> {
+                    detailContainer.background = cardBackgroundRed
                     taskProgress.progressDrawable = overDueProgressDrawable
                     taskProgress.progress = taskProgress.max
 
@@ -118,6 +128,7 @@ class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
                     )
                 }
                 due.lessThanOneDayLeft() -> {
+                    detailContainer.background = cardBackgroundBlue
                     taskProgress.progressDrawable = todayProgressDrawable
                     taskProgress.progress = taskProgress.max
 
@@ -130,6 +141,7 @@ class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
                     val timePassed = current.diff(created)
                     val timeLeft = due.diff(current)
 
+                    detailContainer.background = cardBackgroundSky
                     taskProgress.progressDrawable = normalProgressDrawable
                     taskProgress.progress = timePassed
 
