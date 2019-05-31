@@ -1,9 +1,30 @@
 <resources>
     <string name="app_name">HouseManager</string>
     <string name="no_name">이름 없음</string>
+
+    <string name="title_activity_new_task">할 일 입력</string>
+    <string name="title_activity_task_guide">집안일가이드</string>
+    
+    <string name="tag_confirm">확인</string>
+
+    <string name="task_cleaning">청소</string>
+    <string name="task_dish_washing">설거지</string>
+    <string name="task_bathroom">화장실</string>
+    <string name="task_laundry">빨래</string>
+    <string name="task_waste_sorting">분리수거</string>
+    <string name="task_tidy_up">정리</string>
+    <string name="task_etc">기타</string>
+
     <string name="menu_profile">계정</string>
     <string name="menu_notification">알림</string>
     <string name="menu_report">리포트</string>
     <string name="menu_settings">설정</string>
+    <!-- FIXME: "집안일"과 "할 일" 용어를 어떻게 정리할 수 있을까? -->
+    <string name="menu_add_task">할 일 추가</string>
     <string name="notification_title">할 일</string>
+
+    <string-array name="menu_add_task_buttons">
+        <item>@string/title_activity_new_task</item>
+        <item>@string/title_activity_task_guide</item>
+    </string-array>
 </resources>

@@ -18,13 +18,17 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
+class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
 
     private var onClickDelete: ((Task) -> Unit)? = null
 
     private val items: MutableList<Task> = mutableListOf()
 
     override fun getItemCount(): Int = items.size
+
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflateBinding(R.layout.item_task))
