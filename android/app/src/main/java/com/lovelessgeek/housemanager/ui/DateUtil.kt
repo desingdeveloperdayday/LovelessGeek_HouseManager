@@ -31,7 +31,7 @@ fun Long.toReadableDateString(): String {
     else if (this >= day)
         "%d일".format(this / day)
     else
-        "%시간".format(this / hour)
+        "%d시간".format(this / hour)
 }
 
 fun makeTime(
