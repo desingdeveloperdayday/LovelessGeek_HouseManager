@@ -4,6 +4,8 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
@@ -67,6 +69,10 @@ class NotificationFragment : BaseFragment() {
             }
         }
 
+        vm.showCategory.observe(this) { category ->
+            taskAdapter.showOnly(category)
+        }
+
         vm.moveToNewTask.observe(this) {
             /*
             val intent = Intent(activity, NewTaskActivity::class.java)
@@ -77,7 +83,7 @@ class NotificationFragment : BaseFragment() {
             */
             AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.menu_add_task)
-                .setItems(R.array.menu_add_task_buttons) { dialog, which ->  
+                .setItems(R.array.menu_add_task_buttons) { dialog, which ->
                     when (which) {
                         0 -> {  // 할 일 입력
                             val intent = Intent(activity, NewTaskActivity::class.java)
@@ -131,9 +137,24 @@ class NotificationFragment : BaseFragment() {
             .map { category -> category.readableName }
             .let {
                 category_spinner.adapter =
-                    ArrayAdapter(context, android.R.layout.simple_spinner_item, it).apply {
+                    ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, it).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     }
+
+                category_spinner.onItemSelectedListener = object : OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        // Does nothing.
+                    }
+
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        vm.onCategorySelected(Category.values()[position])
+                    }
+                }
             }
     }
 }

@@ -26,17 +26,15 @@ import com.lovelessgeek.housemanager.ui.toReadableDateString
 import com.lovelessgeek.housemanager.ui.toSecond
 import java.util.Date
 
-class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
+class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     private var onClickDelete: ((Task) -> Unit)? = null
 
+    private var category: Category = Default
+    private val originalItems: MutableList<Task> = mutableListOf()
     private val items: MutableList<Task> = mutableListOf()
 
     override fun getItemCount(): Int = items.size
-
-    override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflateBinding(R.layout.item_task))
@@ -52,14 +50,39 @@ class TaskListAdapter() : RecyclerView.Adapter<ViewHolder>() {
     }
 
     fun add(item: Task) {
-        items.add(item)
-        notifyItemInserted(items.lastIndex)
+        originalItems.add(item)
+        applyFilterOnItem(item)
     }
 
     fun addAll(newItems: List<Task>) {
+        originalItems.clear()
+        originalItems.addAll(newItems)
+        applyFilter()
+    }
+
+    fun showOnly(category: Category) {
+        if (this.category != category) {
+            this.category = category
+            applyFilter()
+        }
+    }
+
+    private fun applyFilter() {
         items.clear()
-        items.addAll(newItems)
+        items.addAll(originalItems.let { items ->
+            if (category == Default)
+                items
+            else
+                items.filter { task -> task.category == category }
+        })
         notifyDataSetChanged()
+    }
+
+    private fun applyFilterOnItem(item: Task) {
+        if (category == Default || item.category == category) {
+            items.add(item)
+            notifyItemInserted(items.lastIndex)
+        }
     }
 
     /**

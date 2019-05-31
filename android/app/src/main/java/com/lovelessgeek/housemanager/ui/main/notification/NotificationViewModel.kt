@@ -21,6 +21,10 @@ class NotificationViewModel(
     val state: LiveData<State>
         get() = _state
 
+    private val _showCategory = MutableLiveData<Category>()
+    val showCategory: LiveData<Category>
+        get() = _showCategory
+
     private val _moveToNewTask = MutableLiveData<SimpleEvent>()
     val moveToNewTask: LiveData<SimpleEvent>
         get() = _moveToNewTask
@@ -116,5 +120,9 @@ class NotificationViewModel(
     fun deleteAll() = viewModelScope.launch {
         repository.deleteAll()
         _state.postValue(Success(tasks = listOf()))
+    }
+
+    fun onCategorySelected(category: Category) {
+        _showCategory.postValue(category)
     }
 }
