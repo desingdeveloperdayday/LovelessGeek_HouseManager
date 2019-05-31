@@ -80,7 +80,6 @@ class TodoTaskViewHolder(private val binding: ItemTaskTodoBinding) :
                 taskProgress.progressDrawable = overDueProgressDrawable
                 taskProgress.progress = taskProgress.max
 
-                dayPassed.hide()
                 dayLeft.hide()
                 daySpecial.show()
                 daySpecial.text = context.getString(
@@ -93,7 +92,6 @@ class TodoTaskViewHolder(private val binding: ItemTaskTodoBinding) :
                 taskProgress.progressDrawable = todayProgressDrawable
                 taskProgress.progress = taskProgress.max
 
-                dayPassed.hide()
                 dayLeft.hide()
                 daySpecial.show()
                 daySpecial.text = context.getString(R.string.task_day_today)
@@ -106,11 +104,9 @@ class TodoTaskViewHolder(private val binding: ItemTaskTodoBinding) :
                 taskProgress.progressDrawable = normalProgressDrawable
                 taskProgress.progress = timePassed
 
-                dayPassed.show()
                 dayLeft.show()
                 daySpecial.hide()
 
-                dayPassed.text = timePassed.toReadableDateString()
                 dayLeft.text =
                     context.getString(R.string.task_day_left, timeLeft.toDayNumberOnly())
             }

@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,24 +59,24 @@
 
             <ImageView
                 android:id="@+id/repeat_icon"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginEnd="4dp"
                 android:src="@drawable/ic_repeat"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/period_text"
                 app:layout_constraintEnd_toStartOf="@+id/period_text"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/period_text" />
 
             <TextView
                 android:id="@+id/period_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="18dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="end"
-                android:minWidth="32dp"
                 android:textColor="@color/text_secondary_56"
+                android:textSize="13sp"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="2주"
@@ -88,7 +88,7 @@
             android:id="@+id/task_progress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="0dp"
-            android:layout_height="16dp"
+            android:layout_height="18dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -98,24 +98,11 @@
             tools:progressDrawable="@drawable/progress_task" />
 
         <TextView
-            android:id="@+id/day_passed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/task_progress"
-            app:layout_constraintStart_toStartOf="@+id/task_progress"
-            app:layout_constraintTop_toTopOf="@+id/task_progress"
-            tools:text="4일" />
-
-        <TextView
             android:id="@+id/day_special"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/task_progress"
@@ -127,15 +114,17 @@
 
         <TextView
             android:id="@+id/day_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_width="56dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="33dp"
+            android:layout_marginBottom="34dp"
+            android:background="@drawable/background_dday"
+            android:gravity="center"
             android:textColor="@color/true_blue"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/task_progress"
-            app:layout_constraintEnd_toEndOf="@+id/task_progress"
-            app:layout_constraintTop_toTopOf="@+id/task_progress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="D-3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
