@@ -8,13 +8,14 @@ import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BaseActivity
 import com.lovelessgeek.housemanager.data.db.TaskEntity
 import com.lovelessgeek.housemanager.shared.models.Category
+import com.lovelessgeek.housemanager.shared.models.Task
 import kotlinx.android.synthetic.main.activity_task_guide.*
 
 class TaskGuideActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener {
 
     companion object {
         const val KEY_TASK_NAME = "KEY_TASK_NAME"
-        const val KEY_DATE      = "KEY_DATE"
+        const val KEY_DATE = "KEY_DATE"
     }
 
     private val taskAdapter = GuidedTaskListAdapter()
@@ -45,7 +46,16 @@ class TaskGuideActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
             adapter = taskAdapter
             layoutManager = LinearLayoutManager(this@TaskGuideActivity)
         }
-        taskAdapter.add(TaskEntity(id = "TASK_ID", name = "TASK NAME", category = Category.Default))
+        taskAdapter.add(
+            TaskEntity(
+                id = "TASK_ID",
+                name = "TASK NAME",
+                category = Category.Default,
+                isComplete = false,
+                isRepeat = false,
+                period = Task.PERIOD_NO_REPEAT
+            )
+        )
         taskAdapter.notifyDataSetChanged()
     }
 
@@ -57,14 +67,18 @@ class TaskGuideActivity : BaseActivity(), CompoundButton.OnCheckedChangeListener
          * FIXME: AND 조건 처리
          */
         when (buttonView?.id) {
-            R.id.chip_task_cleaning -> { Toast.makeText(this, "Task cleaning: $isChecked", Toast.LENGTH_SHORT).show() }
-            R.id.chip_task_dish_washing -> {}
-            R.id.chip_task_bathroom -> {}
-            R.id.chip_task_laundry -> {}
-            R.id.chip_task_waste_sorting -> {}
-            R.id.chip_task_tidy_up -> {}
-            R.id.chip_task_etc -> {}
-            null -> {}
+            R.id.chip_task_cleaning -> {
+                Toast.makeText(this, "Task cleaning: $isChecked", Toast.LENGTH_SHORT).show()
+            }
+            R.id.chip_task_dish_washing,
+            R.id.chip_task_bathroom,
+            R.id.chip_task_laundry,
+            R.id.chip_task_waste_sorting,
+            R.id.chip_task_tidy_up,
+            R.id.chip_task_etc,
+            null -> {
+                // Does nothing
+            }
         }
     }
     // CompoundButton.OnCheckedChangeListener
