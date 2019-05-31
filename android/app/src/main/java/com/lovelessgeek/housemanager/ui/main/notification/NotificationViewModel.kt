@@ -9,6 +9,8 @@ import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Task
 import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Success
+import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.DDAY
+import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.NAME
 import com.lovelessgeek.housemanager.ui.makeTime
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -28,6 +30,10 @@ class NotificationViewModel(
     private val _showingType = MutableLiveData<ShowingType>(ShowingType.TODO)
     val showingType: LiveData<ShowingType>
         get() = _showingType
+
+    private val _sortBy = MutableLiveData<SortMethod>(DDAY)
+    val sortBy: LiveData<SortMethod>
+        get() = _sortBy
 
     private val _moveToNewTask = MutableLiveData<SimpleEvent>()
     val moveToNewTask: LiveData<SimpleEvent>
@@ -178,5 +184,15 @@ class NotificationViewModel(
 
     fun onClickCompleted() {
         _showingType.postValue(ShowingType.COMPLETED)
+    }
+
+    fun onClickSort() {
+        val sortMethod = when (_sortBy.value) {
+            DDAY -> NAME
+            NAME -> DDAY
+            else -> throw IllegalStateException("Could not be null.")
+        }
+
+        _sortBy.postValue(sortMethod)
     }
 }

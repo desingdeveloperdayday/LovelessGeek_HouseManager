@@ -80,6 +80,11 @@ class NotificationFragment : BaseFragment() {
             }
         }
 
+        vm.sortBy.observe(this) { sortMethod ->
+            sort_button.text = sortMethod.str
+            taskAdapter.sortBy(sortMethod)
+        }
+
         vm.moveToNewTask.observe(this) {
             /*
             val intent = Intent(activity, NewTaskActivity::class.java)
@@ -127,6 +132,10 @@ class NotificationFragment : BaseFragment() {
         // Fab
         fab_add_task.setOnClickListener {
             vm.onClickAdd()
+        }
+
+        sort_button.setOnClickListener {
+            vm.onClickSort()
         }
     }
 

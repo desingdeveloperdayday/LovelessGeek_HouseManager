@@ -7,6 +7,9 @@ import com.lovelessgeek.housemanager.ext.inflateBinding
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Category.Default
 import com.lovelessgeek.housemanager.shared.models.Task
+import com.lovelessgeek.housemanager.ui.main.notification.SortMethod
+import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.DDAY
+import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.NAME
 
 class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -18,6 +21,8 @@ class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var onClickDelete: ((Task) -> Unit)? = null
 
     private var category: Category = Default
+    private var sortMethod: SortMethod = DDAY
+
     private val originalItems: MutableList<Task> = mutableListOf()
     private val items: MutableList<Task> = mutableListOf()
 
@@ -59,22 +64,33 @@ class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun add(item: Task) {
         originalItems.add(item)
         applyFilterOnItem(item)
+        sortItems()
     }
 
     fun addAll(newItems: List<Task>) {
         originalItems.clear()
         originalItems.addAll(newItems)
         applyFilter()
+        sortItems()
     }
 
     fun showOnly(category: Category) {
         if (this.category != category) {
             this.category = category
             applyFilter()
+            sortItems()
+        }
+    }
+
+    fun sortBy(sortMethod: SortMethod) {
+        if (this.sortMethod != sortMethod) {
+            this.sortMethod = sortMethod
+            sortItems()
         }
     }
 
     private fun applyFilter() {
+        val prevSize = items.size
         items.clear()
         items.addAll(originalItems.let { items ->
             if (category == Default)
@@ -82,7 +98,18 @@ class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             else
                 items.filter { task -> task.category == category }
         })
-        notifyDataSetChanged()
+
+        notifyItemRangeRemoved(0, prevSize)
+        notifyItemRangeInserted(0, items.size)
+    }
+
+    private fun sortItems() {
+        when (sortMethod) {
+            DDAY -> items.sortBy { item -> item.time.time }
+            NAME -> items.sortBy { item -> item.name }
+        }
+
+        notifyItemRangeChanged(0, itemCount)
     }
 
     private fun applyFilterOnItem(item: Task) {

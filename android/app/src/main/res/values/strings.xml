@@ -27,6 +27,7 @@
     <string name="task_day_overdue">+%1$s</string>
     <string name="task_day_today">TODAY!</string>
     <string name="task_day_left">D-%1$d</string>
+    <string name="task_filter_dday">디데이순</string>
 
     <string-array name="menu_add_task_buttons">
         <item>@string/title_activity_new_task</item>
