@@ -1,6 +1,7 @@
 package com.lovelessgeek.housemanager.ui
 
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -25,4 +26,16 @@ fun Long.lessThanOneDayLeft(current: Long = Date().time): Boolean =
 fun Long.toReadableDateString(): String {
     val dateFormat = SimpleDateFormat("dd일", Locale.KOREA)
     return dateFormat.format(Date(this))
+}
+
+fun makeTime(
+    month: Int = 1,
+    day: Int = 1,
+    hour: Int = 0,
+    minute: Int = 0,
+    second: Int = 0
+): Long {
+    return Calendar.getInstance().apply {
+        set(2019, month, day, hour, minute, second)
+    }.time.time
 }

@@ -2,7 +2,6 @@ package com.lovelessgeek.housemanager.ui
 
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FunSpec
-import java.util.Calendar
 
 class DateUtilTest : FunSpec() {
 
@@ -26,17 +25,5 @@ class DateUtilTest : FunSpec() {
             hourAfter.lessThanOneDayLeft(today) shouldBe true
             twoDayAfter.lessThanOneDayLeft(today) shouldBe false
         }
-    }
-
-    private fun makeTime(
-        month: Int = 1,
-        day: Int = 1,
-        hour: Int = 0,
-        minute: Int = 0,
-        second: Int = 0
-    ): Long {
-        return Calendar.getInstance().apply {
-            set(2019, month, day, hour, minute, second)
-        }.time.time
     }
 }
