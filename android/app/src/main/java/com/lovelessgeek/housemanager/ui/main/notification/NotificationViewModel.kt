@@ -73,4 +73,8 @@ class NotificationViewModel(
         repository.deleteTask(taskEntity)
     }
 
+    fun deleteAll() = viewModelScope.launch {
+        repository.deleteAll()
+        _state.postValue(Success(tasks = listOf()))
+    }
 }

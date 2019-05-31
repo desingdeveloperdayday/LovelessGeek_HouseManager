@@ -15,4 +15,7 @@ abstract class TaskDao : BaseDao<TaskEntity> {
 
     //@Query("SELECT * FROM task WHERE time > :time")
     //abstract fun loadTasksAfter(time: Date): List<TaskEntity>
+
+    @Query("DELETE from task")
+    abstract suspend fun deleteAll()
 }

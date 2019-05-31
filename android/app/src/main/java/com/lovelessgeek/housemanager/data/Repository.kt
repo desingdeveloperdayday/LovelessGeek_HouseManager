@@ -8,4 +8,6 @@ interface Repository {
     suspend fun addNewTask(task: Task)
     suspend fun deleteTask(task: Task)
     suspend fun loadCategories(): List<Category>
+
+    suspend fun deleteAll()
 }

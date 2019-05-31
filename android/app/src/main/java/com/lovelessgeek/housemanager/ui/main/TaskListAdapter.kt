@@ -49,6 +49,7 @@ class TaskListAdapter : RecyclerView.Adapter<ViewHolder>() {
     }
 
     fun addAll(newItems: List<Task>) {
+        items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
     }

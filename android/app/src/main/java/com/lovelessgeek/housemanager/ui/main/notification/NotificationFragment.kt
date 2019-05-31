@@ -39,6 +39,10 @@ class NotificationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        clear_db_button.setOnClickListener {
+            vm.deleteAll()
+        }
+
         setupTaskList()
 
         // Fab

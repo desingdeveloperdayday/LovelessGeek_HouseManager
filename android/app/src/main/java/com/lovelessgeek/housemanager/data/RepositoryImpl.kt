@@ -31,4 +31,8 @@ class RepositoryImpl(db: LocalDatabase) : Repository {
     private fun categoryList(): List<Category> {
         return Category.values().toList()
     }
+
+    override suspend fun deleteAll() {
+        taskDao.deleteAll()
+    }
 }
