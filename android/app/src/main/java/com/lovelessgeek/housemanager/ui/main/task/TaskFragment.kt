@@ -10,10 +10,13 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jakewharton.rxbinding3.appcompat.navigationClicks
+import com.jakewharton.rxbinding3.view.clicks
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BindingFragment
 import com.lovelessgeek.housemanager.databinding.FragmentTaskLayoutBinding
 import com.lovelessgeek.housemanager.ext.hide
+import com.lovelessgeek.housemanager.ext.preventMultipleEmission
 import com.lovelessgeek.housemanager.ext.show
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.ui.main.task.TaskViewModel.State.Failure
@@ -22,9 +25,10 @@ import com.lovelessgeek.housemanager.ui.main.task.TaskViewModel.State.Success
 import com.lovelessgeek.housemanager.ui.main.task.adapter.TaskListAdapter
 import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import com.lovelessgeek.housemanager.ui.newtask.TaskGuideActivity
+import io.reactivex.Observable
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>() {
+class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
 
     // FIXME
     object RequestCode {
@@ -39,7 +43,7 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>() {
 
     private val vm: TaskViewModel by viewModel()
 
-    var onMenuButtonClicked: (View) -> Unit = {}
+    var onMenuButtonClicked: () -> Unit = {}
 
     private val textPrimary: Int by lazy { requireContext().getColor(R.color.text_primary) }
     private val textPrimaryDisabled: Int by lazy { requireContext().getColor(R.color.text_primary_16) }
@@ -55,7 +59,10 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>() {
         setupTaskList()
         setupButtons()
 
-        binding.bottomAppBar.setNavigationOnClickListener(onMenuButtonClicked)
+        +binding.bottomAppBar.navigationClicks()
+            .subscribe({
+                onMenuButtonClicked()
+            }, Throwable::printStackTrace)
 
         vm.state.observe(this) { state ->
             when (state) {
@@ -130,22 +137,32 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>() {
     }
 
     private fun setupButtons() = with(binding) {
-        content.taskTitleTodo.setOnClickListener {
-            vm.onClickTodo()
-        }
-
-        content.taskTitleCompleted.setOnClickListener {
-            vm.onClickCompleted()
-        }
+        +Observable
+            .merge(
+                content.taskTitleTodo.clicks().map {
+                    { vm.onClickTodo() }
+                },
+                content.taskTitleCompleted.clicks().map {
+                    { vm.onClickCompleted() }
+                }
+            )
+            .preventMultipleEmission(300)
+            .subscribe({ action ->
+                action()
+            }, Throwable::printStackTrace)
 
         // Fab
-        fabAddTask.setOnClickListener {
-            vm.onClickAdd()
-        }
+        +fabAddTask.clicks()
+            .preventMultipleEmission()
+            .subscribe({
+                vm.onClickAdd()
+            }, Throwable::printStackTrace)
 
-        content.sortButton.setOnClickListener {
-            vm.onClickSort()
-        }
+        +content.sortButton.clicks()
+            .preventMultipleEmission()
+            .subscribe({
+                vm.onClickSort()
+            }, Throwable::printStackTrace)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -1,5 +1,8 @@
 object Version {
     const val kotlin = "1.3.21"
+
+    const val rxbinding = "3.0.0-alpha2"
+
     const val coroutine = "1.2.1"
     const val coroutineAndroid = "1.2.0"
     const val junit = "4.12"
