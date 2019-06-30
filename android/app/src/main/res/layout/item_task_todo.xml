@@ -121,7 +121,7 @@
             android:layout_marginBottom="34dp"
             android:background="@drawable/background_dday"
             android:gravity="center"
-            android:textColor="@color/true_blue"
+            android:textColor="@color/dodger_blue"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
