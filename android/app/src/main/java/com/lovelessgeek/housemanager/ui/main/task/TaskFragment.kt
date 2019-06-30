@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager.ui.main.notification
+package com.lovelessgeek.housemanager.ui.main.task
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -12,20 +12,19 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BindingFragment
-import com.lovelessgeek.housemanager.databinding.FragmentNotificationLayoutBinding
+import com.lovelessgeek.housemanager.databinding.FragmentTaskLayoutBinding
 import com.lovelessgeek.housemanager.ext.hide
-import com.lovelessgeek.housemanager.ext.setItemMargin
 import com.lovelessgeek.housemanager.ext.show
 import com.lovelessgeek.housemanager.shared.models.Category
-import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Failure
-import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Loading
-import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Success
-import com.lovelessgeek.housemanager.ui.main.notification.adapter.TaskListAdapter
+import com.lovelessgeek.housemanager.ui.main.task.TaskViewModel.State.Failure
+import com.lovelessgeek.housemanager.ui.main.task.TaskViewModel.State.Loading
+import com.lovelessgeek.housemanager.ui.main.task.TaskViewModel.State.Success
+import com.lovelessgeek.housemanager.ui.main.task.adapter.TaskListAdapter
 import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import com.lovelessgeek.housemanager.ui.newtask.TaskGuideActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class NotificationFragment : BindingFragment<FragmentNotificationLayoutBinding>() {
+class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>() {
 
     // FIXME
     object RequestCode {
@@ -33,12 +32,12 @@ class NotificationFragment : BindingFragment<FragmentNotificationLayoutBinding>(
     }
 
     override val layoutId: Int
-        get() = R.layout.fragment_notification_layout
+        get() = R.layout.fragment_task_layout
 
     private val taskAdapter =
         TaskListAdapter()
 
-    private val vm: NotificationViewModel by viewModel()
+    private val vm: TaskViewModel by viewModel()
 
     var onMenuButtonClicked: (View) -> Unit = {}
 
@@ -165,7 +164,7 @@ class NotificationFragment : BindingFragment<FragmentNotificationLayoutBinding>(
     }
 
     private fun setupTaskList() = with(binding) {
-        content.notificationList.apply {
+        content.taskList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
         }

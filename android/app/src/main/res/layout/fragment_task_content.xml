@@ -8,7 +8,7 @@
         android:id="@+id/content_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:showIn="@layout/fragment_notification_layout">
+        tools:showIn="@layout/fragment_task_layout">
 
         <Button
             android:id="@+id/clear_db_button"
@@ -90,7 +90,7 @@
             app:layout_constraintTop_toTopOf="@+id/category_spinner" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notification_list"
+            android:id="@+id/task_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"

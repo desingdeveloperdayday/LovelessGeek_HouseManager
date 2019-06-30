@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager.ui.main.notification.adapter
+package com.lovelessgeek.housemanager.ui.main.task.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -9,9 +9,9 @@ import com.lovelessgeek.housemanager.ext.inflateBinding
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Category.Default
 import com.lovelessgeek.housemanager.shared.models.Task
-import com.lovelessgeek.housemanager.ui.main.notification.SortMethod
-import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.DDAY
-import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.NAME
+import com.lovelessgeek.housemanager.ui.main.task.SortMethod
+import com.lovelessgeek.housemanager.ui.main.task.SortMethod.DDAY
+import com.lovelessgeek.housemanager.ui.main.task.SortMethod.NAME
 
 class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
 

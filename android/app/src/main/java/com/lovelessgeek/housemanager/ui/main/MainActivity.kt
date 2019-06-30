@@ -10,7 +10,7 @@ import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BaseActivity
 import com.lovelessgeek.housemanager.replaceWhenNotCurrent
 import com.lovelessgeek.housemanager.ui.login.LoginActivity
-import com.lovelessgeek.housemanager.ui.main.notification.NotificationFragment
+import com.lovelessgeek.housemanager.ui.main.task.TaskFragment
 import com.lovelessgeek.housemanager.ui.main.profile.ProfileFragment
 import com.lovelessgeek.housemanager.ui.main.report.ReportFragment
 import com.lovelessgeek.housemanager.ui.main.setting.SettingsFragment
@@ -30,7 +30,7 @@ class MainActivity : BaseActivity() {
 
         observeState()
 
-        showNotificationFragment()
+        showTaskFragment()
     }
 
     private fun setupNavigation() {
@@ -49,7 +49,7 @@ class MainActivity : BaseActivity() {
 
     private fun handleNavMenuItem(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.main_notifiation -> showNotificationFragment()
+            R.id.main_task -> showTaskFragment()
             R.id.main_profile -> showProfileFragment()
             R.id.main_report -> showReportFragment()
             R.id.main_settings -> showSettingsFragment()
@@ -60,10 +60,10 @@ class MainActivity : BaseActivity() {
         return true
     }
 
-    private fun showNotificationFragment() {
+    private fun showTaskFragment() {
         replaceWhenNotCurrent(
             R.id.fragment_container,
-            NotificationFragment().apply {
+            TaskFragment().apply {
                 onMenuButtonClicked = {
                     findDrawer()?.openDrawer(GravityCompat.START)
                 }

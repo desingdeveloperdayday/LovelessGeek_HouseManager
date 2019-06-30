@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager.ui.main.notification.adapter
+package com.lovelessgeek.housemanager.ui.main.task.adapter
 
 import android.content.Context
 import androidx.annotation.DrawableRes

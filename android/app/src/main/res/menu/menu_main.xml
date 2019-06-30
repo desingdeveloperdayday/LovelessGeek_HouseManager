@@ -7,8 +7,8 @@
         android:title="@string/menu_profile" />
 
     <item
-        android:id="@+id/main_notifiation"
-        android:title="@string/menu_notification" />
+        android:id="@+id/main_task"
+        android:title="@string/menu_task" />
 
     <item
         android:id="@+id/main_report"

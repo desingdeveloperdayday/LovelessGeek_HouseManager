@@ -1,4 +1,4 @@
-package com.lovelessgeek.housemanager.ui.main.notification
+package com.lovelessgeek.housemanager.ui.main.task
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,14 +8,14 @@ import com.lovelessgeek.housemanager.base.event.SimpleEvent
 import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Task
-import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.State.Success
-import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.DDAY
-import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.NAME
+import com.lovelessgeek.housemanager.ui.main.task.TaskViewModel.State.Success
+import com.lovelessgeek.housemanager.ui.main.task.SortMethod.DDAY
+import com.lovelessgeek.housemanager.ui.main.task.SortMethod.NAME
 import com.lovelessgeek.housemanager.ui.makeTime
 import kotlinx.coroutines.launch
 import java.util.Date
 
-class NotificationViewModel(
+class TaskViewModel(
     private val repository: Repository
 ) : ViewModel() {
 

@@ -16,7 +16,7 @@
     <string name="task_etc">기타</string>
 
     <string name="menu_profile">계정</string>
-    <string name="menu_notification">알림</string>
+    <string name="menu_task">할 일</string>
     <string name="menu_report">리포트</string>
     <string name="menu_settings">설정</string>
     <!-- FIXME: "집안일"과 "할 일" 용어를 어떻게 정리할 수 있을까? -->
