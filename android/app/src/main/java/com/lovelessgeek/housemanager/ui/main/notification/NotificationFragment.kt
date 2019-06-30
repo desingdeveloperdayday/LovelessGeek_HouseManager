@@ -11,7 +11,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lovelessgeek.housemanager.R
-import com.lovelessgeek.housemanager.base.BaseFragment
+import com.lovelessgeek.housemanager.base.BindingFragment
+import com.lovelessgeek.housemanager.databinding.FragmentNotificationLayoutBinding
 import com.lovelessgeek.housemanager.ext.hide
 import com.lovelessgeek.housemanager.ext.setItemMargin
 import com.lovelessgeek.housemanager.ext.show
@@ -22,11 +23,9 @@ import com.lovelessgeek.housemanager.ui.main.notification.NotificationViewModel.
 import com.lovelessgeek.housemanager.ui.main.notification.adapter.TaskListAdapter
 import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import com.lovelessgeek.housemanager.ui.newtask.TaskGuideActivity
-import kotlinx.android.synthetic.main.fragment_notification_content.*
-import kotlinx.android.synthetic.main.fragment_notification_layout.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class NotificationFragment : BaseFragment() {
+class NotificationFragment : BindingFragment<FragmentNotificationLayoutBinding>() {
 
     // FIXME
     object RequestCode {
@@ -49,14 +48,15 @@ class NotificationFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        clear_db_button.setOnClickListener {
+        // FIXME: Remove since it is for debug
+        binding.content.clearDbButton.setOnClickListener {
             vm.deleteAll()
         }
 
         setupTaskList()
         setupButtons()
 
-        bottom_app_bar.setNavigationOnClickListener(onMenuButtonClicked)
+        binding.bottomAppBar.setNavigationOnClickListener(onMenuButtonClicked)
 
         vm.state.observe(this) { state ->
             when (state) {
@@ -78,18 +78,22 @@ class NotificationFragment : BaseFragment() {
         vm.showingType.observe(this) { showingType ->
             when (showingType) {
                 ShowingType.TODO -> {
-                    task_title_todo.setTextColor(textPrimary)
-                    task_title_completed.setTextColor(textPrimaryDisabled)
-                    sort_button.show()
-                    edit_button.hide()
+                    with(binding.content) {
+                        taskTitleTodo.setTextColor(textPrimary)
+                        taskTitleCompleted.setTextColor(textPrimaryDisabled)
+                        sortButton.show()
+                        editButton.hide()
+                    }
 
                     vm.loadTodos()
                 }
                 ShowingType.COMPLETED -> {
-                    task_title_todo.setTextColor(textPrimaryDisabled)
-                    task_title_completed.setTextColor(textPrimary)
-                    sort_button.hide()
-                    edit_button.show()
+                    with(binding.content) {
+                        taskTitleTodo.setTextColor(textPrimaryDisabled)
+                        taskTitleCompleted.setTextColor(textPrimary)
+                        sortButton.hide()
+                        editButton.show()
+                    }
 
                     vm.sort(SortMethod.DDAY)
                     vm.loadCompleted()
@@ -98,18 +102,11 @@ class NotificationFragment : BaseFragment() {
         }
 
         vm.sortBy.observe(this) { sortMethod ->
-            sort_button.text = sortMethod.str
+            binding.content.sortButton.text = sortMethod.str
             taskAdapter.sortBy(sortMethod)
         }
 
         vm.moveToNewTask.observe(this) {
-            /*
-            val intent = Intent(activity, NewTaskActivity::class.java)
-            startActivityForResult(
-                intent,
-                RequestCode.NEW_TASK
-            )
-            */
             AlertDialog.Builder(requireActivity())
                 .setTitle(R.string.menu_add_task)
                 .setItems(R.array.menu_add_task_buttons) { dialog, which ->
@@ -133,21 +130,21 @@ class NotificationFragment : BaseFragment() {
         }
     }
 
-    private fun setupButtons() {
-        task_title_todo.setOnClickListener {
+    private fun setupButtons() = with(binding) {
+        content.taskTitleTodo.setOnClickListener {
             vm.onClickTodo()
         }
 
-        task_title_completed.setOnClickListener {
+        content.taskTitleCompleted.setOnClickListener {
             vm.onClickCompleted()
         }
 
         // Fab
-        fab_add_task.setOnClickListener {
+        fabAddTask.setOnClickListener {
             vm.onClickAdd()
         }
 
-        sort_button.setOnClickListener {
+        content.sortButton.setOnClickListener {
             vm.onClickSort()
         }
     }
@@ -167,8 +164,8 @@ class NotificationFragment : BaseFragment() {
         }
     }
 
-    private fun setupTaskList() {
-        notification_list.apply {
+    private fun setupTaskList() = with(binding) {
+        content.notificationList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
             setItemMargin(16)
@@ -180,19 +177,19 @@ class NotificationFragment : BaseFragment() {
         }
     }
 
-    private fun setupCategorySpinner(categories: List<Category>) {
+    private fun setupCategorySpinner(categories: List<Category>) = with(binding) {
         categories
             .map { category -> category.readableName }
             .let {
-                if (category_spinner.adapter != null)
+                if (content.categorySpinner.adapter != null)
                     return
 
-                category_spinner.adapter =
+                content.categorySpinner.adapter =
                     ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, it).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     }
 
-                category_spinner.onItemSelectedListener = object : OnItemSelectedListener {
+                content.categorySpinner.onItemSelectedListener = object : OnItemSelectedListener {
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         // Does nothing.
                     }
