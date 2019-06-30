@@ -3,6 +3,8 @@ package com.lovelessgeek.housemanager.data
 import com.lovelessgeek.housemanager.data.db.LocalDatabase
 import com.lovelessgeek.housemanager.data.db.TaskDao
 import com.lovelessgeek.housemanager.data.db.TaskMapper
+import com.lovelessgeek.housemanager.data.db.createCompletedMockData
+import com.lovelessgeek.housemanager.data.db.createMockData
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Task
 
@@ -38,7 +40,13 @@ class RepositoryImpl(db: LocalDatabase) : Repository {
         return Category.values().toList()
     }
 
-    override suspend fun deleteAll() {
+    override suspend fun initialize() {
         taskDao.deleteAll()
+        listOf(createMockData(), createCompletedMockData())
+            .flatten()
+            .map(TaskMapper::toEntity)
+            .forEach {
+                taskDao.insertTask(it)
+            }
     }
 }

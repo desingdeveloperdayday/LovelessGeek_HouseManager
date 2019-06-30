@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -64,9 +63,8 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // FIXME: Remove since it is for debug
         binding.content.clearDbButton.setOnClickListener {
-            vm.deleteAll()
+            vm.initializeDatabase()
         }
 
         setupTaskList()
@@ -104,7 +102,7 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
                         editButton.hide()
                     }
 
-                    vm.loadTodos()
+                    vm.loadTodoTasks()
                 }
                 ShowingType.COMPLETED -> {
                     with(binding.content) {
@@ -152,7 +150,6 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
             .subscribe({ isEditing ->
                 if (isEditing) enterEditingMode()
                 else {
-                    vm.resetSelections()
                     leaveEditingMode()
                 }
             }, Throwable::printStackTrace)
@@ -213,19 +210,30 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
                 vm.onClickAdd()
             }, Throwable::printStackTrace)
 
-        editButtonClicks
+        +editButtonClicks
             .filter { !it }
             .subscribe({
                 isEditingStream.onNext(true)
             }, Throwable::printStackTrace)
-            .disposedBy()
+
+        val cancelEdit = editButtonClicks
+            .filter { it }
+            .doOnNext {
+                vm.resetSelections()
+            }
 
         +fabClicks
             .filter { it }
             .doOnNext { vm.deleteTasks() }
-            .mergeWith(editButtonClicks.filter { it })
+            .mergeWith(cancelEdit)
             .subscribe({
                 isEditingStream.onNext(false)
+            }, Throwable::printStackTrace)
+
+        +content.selectAllButton.clicks()
+            .preventMultipleEmission()
+            .subscribe({
+                vm.onClickSelectAll()
             }, Throwable::printStackTrace)
 
         +content.sortButton.clicks()

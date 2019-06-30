@@ -1,6 +1,5 @@
 package com.lovelessgeek.housemanager.ui.main.task
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +11,6 @@ import com.lovelessgeek.housemanager.shared.models.Task
 import com.lovelessgeek.housemanager.ui.main.task.SortMethod.DDAY
 import com.lovelessgeek.housemanager.ui.main.task.SortMethod.NAME
 import com.lovelessgeek.housemanager.ui.main.task.TaskViewModel.State.Success
-import com.lovelessgeek.housemanager.ui.makeTimeFrom
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -40,81 +38,6 @@ class TaskViewModel(
     val moveToNewTask: LiveData<SimpleEvent>
         get() = _moveToNewTask
 
-    private val completedMockData = listOf(
-        Task(
-            id = "1",
-            category = Category.random(),
-            name = "시간 조금 남음",
-            isRepeat = true,
-            isComplete = true,
-            period = 86400000 * 7,
-            time = Date(makeTimeFrom(Date(), day = 1, hour = 2)),
-            created = Date(makeTimeFrom(Date(), day = -2, hour = -10)),
-            completed = Date(makeTimeFrom(Date(), hour = -7))
-        ),
-        Task(
-            id = "2",
-            category = Category.random(),
-            name = "시간 많이 남음",
-            isRepeat = true,
-            isComplete = true,
-            period = 86400000 * 20,
-            time = Date(makeTimeFrom(Date(), day = 8)),
-            created = Date(makeTimeFrom(Date(), day = -2, hour = -10)),
-            completed = Date(makeTimeFrom(Date(), hour = -7))
-        ),
-        Task(
-            id = "3",
-            category = Category.random(),
-            name = "오늘",
-            isRepeat = true,
-            isComplete = true,
-            period = 86400000 * 3,
-            time = Date(makeTimeFrom(Date(), hour = 2)),
-            created = Date(makeTimeFrom(Date(), hour = -10)),
-            completed = Date(makeTimeFrom(Date(), hour = -7))
-        )
-    )
-
-    private val mockData = listOf(
-        Task(
-            id = "4",
-            category = Category.random(),
-            name = "시간 조금 남음",
-            isRepeat = true,
-            period = 86400000 * 7,
-            time = Date(makeTimeFrom(Date(), day = 2, hour = 4)),
-            created = Date(makeTimeFrom(Date(), day = -2))
-        ),
-        Task(
-            id = "5",
-            category = Category.random(),
-            name = "시간 많이 남음",
-            isRepeat = true,
-            period = 86400000 * 20,
-            time = Date(makeTimeFrom(Date(), day = 7, hour = 12)),
-            created = Date(makeTimeFrom(Date(), day = -2))
-        ),
-        Task(
-            id = "6",
-            category = Category.random(),
-            name = "오늘",
-            isRepeat = true,
-            period = 86400000 * 3,
-            time = Date(makeTimeFrom(Date(), hour = 20)),
-            created = Date(makeTimeFrom(Date(), day = -2))
-        ),
-        Task(
-            id = "7",
-            category = Category.random(),
-            name = "기한 지남",
-            isRepeat = true,
-            period = 86400000,
-            time = Date(makeTimeFrom(Date(), hour = -2)),
-            created = Date(makeTimeFrom(Date(), day = -2))
-        )
-    )
-
     private val completedTasks: MutableList<Task> = mutableListOf()
 
     sealed class State {
@@ -128,27 +51,26 @@ class TaskViewModel(
         object Failure : State()
     }
 
-    fun loadTodos() = viewModelScope.launch {
+    fun loadTodoTasks() = viewModelScope.launch {
         _state.postValue(
             Success(
-                tasks = repository.loadTodoTasks().takeIf { it.isNotEmpty() } ?: mockData,
+                tasks = repository.loadTodoTasks(),
                 categories = repository.loadCategories()
             )
         )
     }
 
     fun loadCompleted() = viewModelScope.launch {
-        completedTasks.clear()
-        completedTasks.addAll(repository.loadCompletedTasks().takeIf { it.isNotEmpty() }
-            ?: completedMockData)
-
         loadCompletedTasks()
     }
 
     private suspend fun loadCompletedTasks() {
+        completedTasks.clear()
+        completedTasks.addAll(repository.loadCompletedTasks())
+
         _state.postValue(
             Success(
-                tasks = completedTasks.toList(),
+                tasks = completedTasks.deepCopy(),
                 categories = repository.loadCategories()
             )
         )
@@ -176,14 +98,9 @@ class TaskViewModel(
     )
 
     fun deleteTasks() = viewModelScope.launch {
-        //        repository.deleteTasks()
-        Log.e("asdf", "Deletion candidates: ")
-        completedTasks
-            .filter { it.isSelected }
-            .forEach {
-                Log.e("asdf", it.toString())
-            }
+        val targets = completedTasks.filter { it.isSelected }
 
+        repository.deleteTasks(targets)
         loadCompletedTasks()
     }
 
@@ -192,12 +109,26 @@ class TaskViewModel(
             task.isSelected = false
         }
 
-        _state.postValue(Success(tasks = completedTasks.toList()))
+        _state.postValue(Success(tasks = completedTasks.deepCopy()))
     }
 
-    fun deleteAll() = viewModelScope.launch {
-        repository.deleteAll()
-        _state.postValue(Success(tasks = listOf()))
+    fun onClickSelectAll() {
+        completedTasks.forEach { task ->
+            task.isSelected = true
+        }
+
+        _state.postValue(Success(tasks = completedTasks.deepCopy()))
+    }
+
+    fun initializeDatabase() = viewModelScope.launch {
+        repository.initialize()
+
+        showingType.value?.let { showingType ->
+            when (showingType) {
+                ShowingType.TODO -> loadTodoTasks()
+                ShowingType.COMPLETED -> loadCompletedTasks()
+            }
+        }
     }
 
     fun onCategorySelected(category: Category) {
@@ -219,7 +150,7 @@ class TaskViewModel(
                 isSelected = !isSelected
             }
 
-        _state.postValue(Success(tasks = completedTasks.toList()))
+        _state.postValue(Success(tasks = completedTasks.deepCopy()))
     }
 
     fun onClickSort() {
@@ -235,4 +166,6 @@ class TaskViewModel(
     fun sort(sortMethod: SortMethod) {
         _sortBy.postValue(sortMethod)
     }
+
+    private fun List<Task>.deepCopy(): List<Task> = map { it.copy() }
 }

@@ -2,11 +2,15 @@ package com.lovelessgeek.housemanager.data.db
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 
 @Dao
 abstract class TaskDao : BaseDao<TaskEntity> {
+
+    @Insert
+    abstract suspend fun insertTask(task: TaskEntity)
 
     @Delete
     abstract suspend fun deleteTask(task: TaskEntity)

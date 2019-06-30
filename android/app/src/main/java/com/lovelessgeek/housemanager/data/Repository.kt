@@ -11,5 +11,5 @@ interface Repository {
     suspend fun deleteTasks(tasks: List<Task>)
     suspend fun loadCategories(): List<Category>
 
-    suspend fun deleteAll()
+    suspend fun initialize()
 }

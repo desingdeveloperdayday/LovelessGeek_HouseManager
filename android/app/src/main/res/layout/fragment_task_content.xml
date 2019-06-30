@@ -22,12 +22,17 @@
 
             <Button
                 android:id="@+id/clear_db_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="CLEAR"
-                app:layout_constraintBaseline_toBaselineOf="@+id/task_title_completed"
-                app:layout_constraintStart_toEndOf="@+id/task_title_completed" />
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="invalidate"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/task_title_completed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/task_title_todo"
@@ -74,7 +79,10 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:paddingStart="24dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="8dp"
                 android:text="@string/task_select_all"
                 android:textColor="@color/true_blue"
                 android:textSize="16sp"
