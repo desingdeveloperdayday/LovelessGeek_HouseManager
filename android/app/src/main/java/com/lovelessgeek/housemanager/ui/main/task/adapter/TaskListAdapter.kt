@@ -30,10 +30,8 @@ class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
     private val originalItems: MutableList<Task> = mutableListOf()
     private val items: MutableList<Task> = mutableListOf()
 
-    override fun getItemCount(): Int = items.size
-
     override fun getItemViewType(position: Int): Int {
-        return if (items[position].isComplete) VIEW_TYPE_COMPLETED else VIEW_TYPE_TODO
+        return if (getItem(position).isComplete) VIEW_TYPE_COMPLETED else VIEW_TYPE_TODO
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -51,7 +49,7 @@ class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = items[position]
+        val item = getItem(position)
         val viewType = getItemViewType(position)
 
         when (viewType) {
