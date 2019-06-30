@@ -185,11 +185,6 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
         }
-
-        // Task RecyclerView
-        taskAdapter.onClickDelete {
-            vm.onClickDeleteTask(it)
-        }
     }
 
     private fun setupCategorySpinner(categories: List<Category>) = with(binding) {

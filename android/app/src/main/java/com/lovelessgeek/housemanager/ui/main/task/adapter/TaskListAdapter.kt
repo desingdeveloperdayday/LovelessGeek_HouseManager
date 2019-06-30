@@ -22,8 +22,6 @@ class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
         val diff = SimpleItemCallback<Task> { id }
     }
 
-    private var onClickDelete: ((Task) -> Unit)? = null
-
     private var category: Category = Default
     private var sortMethod: SortMethod = DDAY
 
@@ -57,10 +55,6 @@ class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
             VIEW_TYPE_COMPLETED -> (holder as CompletedTaskViewHolder).bind(item)
             else -> throw IllegalArgumentException("Error while binding view holder: Invalid view type $viewType")
         }
-    }
-
-    fun onClickDelete(onClickDelete: ((Task) -> Unit)?) {
-        this.onClickDelete = onClickDelete
     }
 
     // Indicates that the code mutates the state of RecyclerView.
