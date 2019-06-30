@@ -1,8 +1,10 @@
 package com.lovelessgeek.housemanager.ui.main.notification.adapter
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.lovelessgeek.housemanager.R
+import com.lovelessgeek.housemanager.base.SimpleItemCallback
 import com.lovelessgeek.housemanager.ext.inflateBinding
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Category.Default
@@ -11,11 +13,13 @@ import com.lovelessgeek.housemanager.ui.main.notification.SortMethod
 import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.DDAY
 import com.lovelessgeek.housemanager.ui.main.notification.SortMethod.NAME
 
-class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
 
     companion object {
         const val VIEW_TYPE_TODO = 1
         const val VIEW_TYPE_COMPLETED = 2
+
+        val diff = SimpleItemCallback<Task> { id }
     }
 
     private var onClickDelete: ((Task) -> Unit)? = null
@@ -61,36 +65,38 @@ class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         this.onClickDelete = onClickDelete
     }
 
-    fun add(item: Task) {
-        originalItems.add(item)
-        applyFilterOnItem(item)
+    // Indicates that the code mutates the state of RecyclerView.
+    private fun mutation(action: () -> Unit) {
+        action()
         sortItems()
+        submitList(items.toList())
     }
 
-    fun addAll(newItems: List<Task>) {
+    fun add(item: Task) = mutation {
+        originalItems.add(item)
+        applyFilterOnItem(item)
+    }
+
+    fun addAll(newItems: List<Task>) = mutation {
         originalItems.clear()
         originalItems.addAll(newItems)
         applyFilter()
-        sortItems()
     }
 
-    fun showOnly(category: Category) {
+    fun showOnly(category: Category) = mutation {
         if (this.category != category) {
             this.category = category
             applyFilter()
-            sortItems()
         }
     }
 
     fun sortBy(sortMethod: SortMethod) {
         if (this.sortMethod != sortMethod) {
-            this.sortMethod = sortMethod
-            sortItems()
+            mutation { this.sortMethod = sortMethod }
         }
     }
 
     private fun applyFilter() {
-        val prevSize = items.size
         items.clear()
         items.addAll(originalItems.let { items ->
             if (category == Default)
@@ -98,9 +104,6 @@ class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             else
                 items.filter { task -> task.category == category }
         })
-
-        notifyItemRangeRemoved(0, prevSize)
-        notifyItemRangeInserted(0, items.size)
     }
 
     private fun sortItems() {
@@ -108,15 +111,11 @@ class TaskListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             DDAY -> items.sortBy { item -> item.time.time }
             NAME -> items.sortBy { item -> item.name }
         }
-
-        notifyItemRangeChanged(0, itemCount)
     }
 
     private fun applyFilterOnItem(item: Task) {
         if (category == Default || item.category == category) {
             items.add(item)
-            notifyItemInserted(items.lastIndex)
         }
     }
-
 }

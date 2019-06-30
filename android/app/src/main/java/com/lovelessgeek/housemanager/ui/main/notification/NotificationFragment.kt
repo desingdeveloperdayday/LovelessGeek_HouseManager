@@ -168,7 +168,6 @@ class NotificationFragment : BindingFragment<FragmentNotificationLayoutBinding>(
         content.notificationList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
-            setItemMargin(16)
         }
 
         // Task RecyclerView
