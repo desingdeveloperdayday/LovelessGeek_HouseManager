@@ -2,6 +2,7 @@ package com.lovelessgeek.housemanager.ui
 
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FunSpec
+import java.util.Date
 
 class DateUtilTest : FunSpec() {
 

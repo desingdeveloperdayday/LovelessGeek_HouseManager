@@ -8,10 +8,10 @@ import com.lovelessgeek.housemanager.base.event.SimpleEvent
 import com.lovelessgeek.housemanager.data.Repository
 import com.lovelessgeek.housemanager.shared.models.Category
 import com.lovelessgeek.housemanager.shared.models.Task
-import com.lovelessgeek.housemanager.ui.main.task.TaskViewModel.State.Success
 import com.lovelessgeek.housemanager.ui.main.task.SortMethod.DDAY
 import com.lovelessgeek.housemanager.ui.main.task.SortMethod.NAME
-import com.lovelessgeek.housemanager.ui.makeTime
+import com.lovelessgeek.housemanager.ui.main.task.TaskViewModel.State.Success
+import com.lovelessgeek.housemanager.ui.makeTimeFrom
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -47,9 +47,9 @@ class TaskViewModel(
             isRepeat = true,
             isComplete = true,
             period = 86400000 * 7,
-            time = Date(makeTime(month = 6, day = 2, hour = 10)),
-            created = Date(makeTime(month = 5, day = 28, hour = 14)),
-            completed = Date(makeTime(month = 6, day = 1, hour = 15))
+            time = Date(makeTimeFrom(Date(), day = 1, hour = 2)),
+            created = Date(makeTimeFrom(Date(), day = -2, hour = -10)),
+            completed = Date(makeTimeFrom(Date(), hour = -7))
         ),
         Task(
             id = "4",
@@ -58,9 +58,9 @@ class TaskViewModel(
             isRepeat = true,
             isComplete = true,
             period = 86400000 * 20,
-            time = Date(makeTime(month = 6, day = 7, hour = 2)),
-            created = Date(makeTime(month = 5, day = 28, hour = 14)),
-            completed = Date(makeTime(month = 6, day = 2, hour = 18))
+            time = Date(makeTimeFrom(Date(), day = 8)),
+            created = Date(makeTimeFrom(Date(), day = -2, hour = -10)),
+            completed = Date(makeTimeFrom(Date(), hour = -7))
         ),
         Task(
             id = "2",
@@ -69,9 +69,9 @@ class TaskViewModel(
             isRepeat = true,
             isComplete = true,
             period = 86400000 * 3,
-            time = Date(makeTime(month = 6, day = 1, hour = 2)),
-            created = Date(makeTime(month = 5, day = 31, hour = 14)),
-            completed = Date(makeTime(month = 5, day = 31, hour = 17))
+            time = Date(makeTimeFrom(Date(), hour = 2)),
+            created = Date(makeTimeFrom(Date(), hour = -10)),
+            completed = Date(makeTimeFrom(Date(), hour = -7))
         )
     )
 
@@ -82,8 +82,8 @@ class TaskViewModel(
             name = "시간 조금 남음",
             isRepeat = true,
             period = 86400000 * 7,
-            time = Date(makeTime(month = 6, day = 2, hour = 10)),
-            created = Date(makeTime(month = 5, day = 28, hour = 14))
+            time = Date(makeTimeFrom(Date(), day = 2, hour = 4)),
+            created = Date(makeTimeFrom(Date(), day = -2))
         ),
         Task(
             id = "4",
@@ -91,8 +91,8 @@ class TaskViewModel(
             name = "시간 많이 남음",
             isRepeat = true,
             period = 86400000 * 20,
-            time = Date(makeTime(month = 6, day = 7, hour = 2)),
-            created = Date(makeTime(month = 5, day = 28, hour = 14))
+            time = Date(makeTimeFrom(Date(), day = 7, hour = 12)),
+            created = Date(makeTimeFrom(Date(), day = -2))
         ),
         Task(
             id = "2",
@@ -100,8 +100,8 @@ class TaskViewModel(
             name = "오늘",
             isRepeat = true,
             period = 86400000 * 3,
-            time = Date(makeTime(month = 6, day = 1, hour = 10)),
-            created = Date(makeTime(month = 5, day = 31, hour = 14))
+            time = Date(makeTimeFrom(Date(), hour = 20)),
+            created = Date(makeTimeFrom(Date(), day = -2))
         ),
         Task(
             id = "1",
@@ -109,8 +109,8 @@ class TaskViewModel(
             name = "기한 지남",
             isRepeat = true,
             period = 86400000,
-            time = Date(makeTime(month = 5, day = 31, hour = 16)),
-            created = Date(makeTime(month = 5, day = 31, hour = 14))
+            time = Date(makeTimeFrom(Date(), hour = -2)),
+            created = Date(makeTimeFrom(Date(), day = -2))
         )
     )
 

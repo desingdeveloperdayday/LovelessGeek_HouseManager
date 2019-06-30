@@ -50,3 +50,21 @@ fun makeTime(
         set(2019, month - 1, day, hour, minute, second)
     }.time.time
 }
+
+fun makeTimeFrom(
+    currentTime: Date,
+    month: Int = 0,
+    day: Int = 0,
+    hour: Int = 0,
+    minute: Int = 0,
+    second: Int = 0
+): Long {
+    return Calendar.getInstance().apply {
+        time = currentTime
+        add(Calendar.MONTH, month)
+        add(Calendar.DATE, day)
+        add(Calendar.HOUR, hour)
+        add(Calendar.MINUTE, minute)
+        add(Calendar.SECOND, second)
+    }.time.time
+}
