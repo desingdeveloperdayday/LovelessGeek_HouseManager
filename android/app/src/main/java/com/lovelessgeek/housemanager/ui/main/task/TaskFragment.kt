@@ -2,7 +2,10 @@ package com.lovelessgeek.housemanager.ui.main.task
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -15,6 +18,7 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.BindingFragment
 import com.lovelessgeek.housemanager.databinding.FragmentTaskLayoutBinding
+import com.lovelessgeek.housemanager.ext.getColorCompat
 import com.lovelessgeek.housemanager.ext.hide
 import com.lovelessgeek.housemanager.ext.preventMultipleEmission
 import com.lovelessgeek.housemanager.ext.show
@@ -26,6 +30,8 @@ import com.lovelessgeek.housemanager.ui.main.task.adapter.TaskListAdapter
 import com.lovelessgeek.housemanager.ui.newtask.NewTaskActivity
 import com.lovelessgeek.housemanager.ui.newtask.TaskGuideActivity
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.subjects.BehaviorSubject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
@@ -38,15 +44,22 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
     override val layoutId: Int
         get() = R.layout.fragment_task_layout
 
-    private val taskAdapter =
-        TaskListAdapter()
+    var onMenuButtonClicked: () -> Unit = {}
+
+    private val taskAdapter = TaskListAdapter()
 
     private val vm: TaskViewModel by viewModel()
 
-    var onMenuButtonClicked: () -> Unit = {}
+    private val textPrimary: Int by lazy { requireContext().getColorCompat(R.color.text_primary) }
+    private val textPrimaryDisabled: Int by lazy { requireContext().getColorCompat(R.color.text_primary_16) }
 
-    private val textPrimary: Int by lazy { requireContext().getColor(R.color.text_primary) }
-    private val textPrimaryDisabled: Int by lazy { requireContext().getColor(R.color.text_primary_16) }
+    private val colorBlue: Int by lazy { requireContext().getColorCompat(R.color.true_blue) }
+    private val colorRed: Int by lazy { requireContext().getColorCompat(R.color.ferrari_red) }
+
+    private val iconAdd: Drawable by lazy { requireContext().getDrawable(R.drawable.ic_add) }
+    private val iconCheck: Drawable by lazy { requireContext().getDrawable(R.drawable.ic_check) }
+
+    private val isEditingStream: BehaviorSubject<Boolean> = BehaviorSubject.createDefault(false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -134,6 +147,39 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
                     }
                 }.show()
         }
+
+        +isEditingStream
+            .subscribe({ isEditing ->
+                if (isEditing) enterEditingMode()
+                else {
+                    vm.resetSelections()
+                    leaveEditingMode()
+                }
+            }, Throwable::printStackTrace)
+
+        +taskAdapter.completedTaskClicks
+            .withLatestFrom(isEditingStream)
+            .filter { (_, isEditing) -> isEditing }
+            .map { (task, _) -> task }
+            .subscribe({ task ->
+                vm.onClickCompletedTask(task)
+            }, Throwable::printStackTrace)
+    }
+
+    private fun enterEditingMode() = with(binding) {
+        actionFab.setImageDrawable(iconCheck)
+        actionFab.backgroundTintList = ColorStateList.valueOf(colorRed)
+        content.editButton.text = getString(R.string.task_cancel)
+        content.categorySpinner.hide(invisible = true)
+        content.selectAllButton.show()
+    }
+
+    private fun leaveEditingMode() = with(binding) {
+        actionFab.setImageDrawable(iconAdd)
+        actionFab.backgroundTintList = ColorStateList.valueOf(colorBlue)
+        content.editButton.text = getString(R.string.task_edit)
+        content.categorySpinner.show()
+        content.selectAllButton.hide()
     }
 
     private fun setupButtons() = with(binding) {
@@ -151,11 +197,35 @@ class TaskFragment : BindingFragment<FragmentTaskLayoutBinding>(rx = true) {
                 action()
             }, Throwable::printStackTrace)
 
-        // Fab
-        +fabAddTask.clicks()
+        val fabClicks = actionFab.clicks()
             .preventMultipleEmission()
+            .withLatestFrom(isEditingStream) { _, isEditing -> isEditing }
+            .share()
+
+        val editButtonClicks = content.editButton.clicks()
+            .preventMultipleEmission()
+            .withLatestFrom(isEditingStream) { _, isEditing -> isEditing }
+            .share()
+
+        +fabClicks
+            .filter { !it }
             .subscribe({
                 vm.onClickAdd()
+            }, Throwable::printStackTrace)
+
+        editButtonClicks
+            .filter { !it }
+            .subscribe({
+                isEditingStream.onNext(true)
+            }, Throwable::printStackTrace)
+            .disposedBy()
+
+        +fabClicks
+            .filter { it }
+            .doOnNext { vm.deleteTasks() }
+            .mergeWith(editButtonClicks.filter { it })
+            .subscribe({
+                isEditingStream.onNext(false)
             }, Throwable::printStackTrace)
 
         +content.sortButton.clicks()

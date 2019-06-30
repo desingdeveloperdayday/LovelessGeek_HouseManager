@@ -8,7 +8,7 @@ interface Repository {
     suspend fun loadTodoTasks(): List<Task>
     suspend fun loadCompletedTasks(): List<Task>
     suspend fun addNewTask(task: Task)
-    suspend fun deleteTask(task: Task)
+    suspend fun deleteTasks(tasks: List<Task>)
     suspend fun loadCategories(): List<Category>
 
     suspend fun deleteAll()

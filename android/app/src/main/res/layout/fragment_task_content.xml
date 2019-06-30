@@ -70,6 +70,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/task_title_todo" />
 
             <Button
+                android:id="@+id/select_all_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/task_select_all"
+                android:textColor="@color/true_blue"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/category_spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/category_spinner" />
+
+            <Button
                 android:id="@+id/sort_button"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
@@ -89,8 +102,8 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="편집"
+                android:padding="8dp"
+                android:text="@string/task_edit"
                 android:textColor="@color/true_blue"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/category_spinner"

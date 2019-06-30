@@ -3,12 +3,18 @@ package com.lovelessgeek.housemanager.data.db
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
+import androidx.room.Transaction
 
 @Dao
 abstract class TaskDao : BaseDao<TaskEntity> {
 
     @Delete
     abstract suspend fun deleteTask(task: TaskEntity)
+
+    @Transaction
+    open suspend fun deleteTasks(tasks: List<TaskEntity>) {
+        tasks.forEach { task -> deleteTask(task) }
+    }
 
     @Query("SELECT * FROM task")
     abstract suspend fun loadAllTasks(): List<TaskEntity>

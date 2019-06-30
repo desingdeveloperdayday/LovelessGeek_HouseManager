@@ -25,8 +25,8 @@ class RepositoryImpl(db: LocalDatabase) : Repository {
         taskDao.insert(TaskMapper.toEntity(task))
     }
 
-    override suspend fun deleteTask(task: Task) {
-        taskDao.deleteTask(TaskMapper.toEntity(task))
+    override suspend fun deleteTasks(tasks: List<Task>) {
+        taskDao.deleteTasks(tasks.map(TaskMapper::toEntity))
     }
 
     override suspend fun loadCategories(): List<Category> {

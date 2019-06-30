@@ -1,6 +1,7 @@
 package com.lovelessgeek.housemanager.base
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 
 /**
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
  *
  * Expect that the type parameter is data class, or implements equals() for equality checks.
  */
-class SimpleItemCallback<T : Any>(
+open class SimpleItemCallback<T : Any>(
     private val keySelector: (T).() -> (Any)
 ) : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T) =

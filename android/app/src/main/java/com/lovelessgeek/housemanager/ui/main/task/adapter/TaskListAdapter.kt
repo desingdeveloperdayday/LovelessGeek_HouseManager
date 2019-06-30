@@ -2,7 +2,7 @@ package com.lovelessgeek.housemanager.ui.main.task.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.base.SimpleItemCallback
 import com.lovelessgeek.housemanager.ext.inflateBinding
@@ -12,14 +12,18 @@ import com.lovelessgeek.housemanager.shared.models.Task
 import com.lovelessgeek.housemanager.ui.main.task.SortMethod
 import com.lovelessgeek.housemanager.ui.main.task.SortMethod.DDAY
 import com.lovelessgeek.housemanager.ui.main.task.SortMethod.NAME
+import io.reactivex.subjects.PublishSubject
 
-class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
+class TaskListAdapter : ListAdapter<Task, ViewHolder>(diff) {
 
     companion object {
         const val VIEW_TYPE_TODO = 1
         const val VIEW_TYPE_COMPLETED = 2
 
-        val diff = SimpleItemCallback<Task> { id }
+        val diff = object : SimpleItemCallback<Task>({ id }) {
+            override fun getChangePayload(oldItem: Task, newItem: Task) =
+                !oldItem.isSelected && newItem.isSelected
+        }
     }
 
     private var category: Category = Default
@@ -28,11 +32,13 @@ class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
     private val originalItems: MutableList<Task> = mutableListOf()
     private val items: MutableList<Task> = mutableListOf()
 
+    val completedTaskClicks: PublishSubject<Task> = PublishSubject.create()
+
     override fun getItemViewType(position: Int): Int {
         return if (getItem(position).isComplete) VIEW_TYPE_COMPLETED else VIEW_TYPE_TODO
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             VIEW_TYPE_TODO -> TodoTaskViewHolder(
                 parent.inflateBinding(
@@ -46,14 +52,39 @@ class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         val viewType = getItemViewType(position)
 
         when (viewType) {
             VIEW_TYPE_TODO -> (holder as TodoTaskViewHolder).bind(item)
-            VIEW_TYPE_COMPLETED -> (holder as CompletedTaskViewHolder).bind(item)
+            VIEW_TYPE_COMPLETED -> (holder as CompletedTaskViewHolder).bind(
+                item,
+                completedTaskClicks::onNext
+            )
             else -> throw IllegalArgumentException("Error while binding view holder: Invalid view type $viewType")
+        }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
+        val isSelected = payloads.getOrNull(0) as? Boolean ?: false
+
+        if (isSelected) {
+            val item = getItem(position)
+            val viewType = getItemViewType(position)
+
+            if (viewType == VIEW_TYPE_COMPLETED) {
+                (holder as CompletedTaskViewHolder).bind(
+                    item,
+                    completedTaskClicks::onNext
+                )
+            } else {
+                throw IllegalArgumentException(
+                    "Error while binding view holder with payloads: Invalid view type $viewType"
+                )
+            }
+        } else {
+            onBindViewHolder(holder, position)
         }
     }
 
@@ -71,7 +102,7 @@ class TaskListAdapter : ListAdapter<Task, RecyclerView.ViewHolder>(diff) {
 
     fun addAll(newItems: List<Task>) = mutation {
         originalItems.clear()
-        originalItems.addAll(newItems)
+        originalItems.addAll(newItems.map { it.copy() })
         applyFilter()
     }
 

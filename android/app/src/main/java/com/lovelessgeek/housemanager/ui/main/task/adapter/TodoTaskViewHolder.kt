@@ -5,7 +5,6 @@ import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.lovelessgeek.housemanager.R
 import com.lovelessgeek.housemanager.databinding.ItemTaskTodoBinding
-import com.lovelessgeek.housemanager.ext.getDrawableCompat
 import com.lovelessgeek.housemanager.ext.goneIf
 import com.lovelessgeek.housemanager.ext.hide
 import com.lovelessgeek.housemanager.ext.show
@@ -33,28 +32,33 @@ class TodoTaskViewHolder(private val binding: ItemTaskTodoBinding) :
         get() = itemView.context
 
     private val cardBackgroundSky =
-        context.getDrawableCompat(R.drawable.card_background_sky)
+        context.getDrawable(R.drawable.card_background_sky)
 
     private val cardBackgroundBlue =
-        context.getDrawableCompat(R.drawable.card_background_blue)
+        context.getDrawable(R.drawable.card_background_blue)
 
     private val cardBackgroundRed =
-        context.getDrawableCompat(R.drawable.card_background_red)
+        context.getDrawable(R.drawable.card_background_red)
 
     private val normalProgressDrawable =
-        context.getDrawableCompat(R.drawable.progress_task_normal)
+        context.getDrawable(R.drawable.progress_task_normal)
 
     private val overDueProgressDrawable =
-        context.getDrawableCompat(R.drawable.progress_task_overdue)
+        context.getDrawable(R.drawable.progress_task_overdue)
 
     private val todayProgressDrawable =
-        context.getDrawableCompat(R.drawable.progress_task_today)
+        context.getDrawable(R.drawable.progress_task_today)
 
     fun bind(task: Task) {
         with(binding) {
             nameText.text = task.name
             categoryText.text = task.category.readableName
-            icon.setImageResource(categoryIcon(task.category))
+            icon.setImageResource(
+                when {
+                    task.time.time.isOverDue() -> incompleteIcon(task.category)
+                    else -> categoryIcon(task.category)
+                }
+            )
 
             repeatIcon.goneIf(!task.isRepeat)
             periodText.goneIf(!task.isRepeat)
@@ -119,5 +123,13 @@ class TodoTaskViewHolder(private val binding: ItemTaskTodoBinding) :
         Trash -> R.drawable.ic_category_trash
         Cleaning -> R.drawable.ic_category_cleaning
         Laundry -> R.drawable.ic_category_laundry
+    }
+
+    @DrawableRes
+    private fun incompleteIcon(category: Category): Int = when (category) {
+        Default -> R.drawable.ic_vacuum_cleaner
+        Trash -> R.drawable.ic_category_trash_incomplete
+        Cleaning -> R.drawable.ic_category_cleaning_incomplete
+        Laundry -> R.drawable.ic_category_laundry_incomplete
     }
 }

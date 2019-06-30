@@ -1,5 +1,6 @@
 package com.lovelessgeek.housemanager.ui.main.task
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,7 +42,7 @@ class TaskViewModel(
 
     private val completedMockData = listOf(
         Task(
-            id = "3",
+            id = "1",
             category = Category.random(),
             name = "시간 조금 남음",
             isRepeat = true,
@@ -52,7 +53,7 @@ class TaskViewModel(
             completed = Date(makeTimeFrom(Date(), hour = -7))
         ),
         Task(
-            id = "4",
+            id = "2",
             category = Category.random(),
             name = "시간 많이 남음",
             isRepeat = true,
@@ -63,7 +64,7 @@ class TaskViewModel(
             completed = Date(makeTimeFrom(Date(), hour = -7))
         ),
         Task(
-            id = "2",
+            id = "3",
             category = Category.random(),
             name = "오늘",
             isRepeat = true,
@@ -77,7 +78,7 @@ class TaskViewModel(
 
     private val mockData = listOf(
         Task(
-            id = "3",
+            id = "4",
             category = Category.random(),
             name = "시간 조금 남음",
             isRepeat = true,
@@ -86,7 +87,7 @@ class TaskViewModel(
             created = Date(makeTimeFrom(Date(), day = -2))
         ),
         Task(
-            id = "4",
+            id = "5",
             category = Category.random(),
             name = "시간 많이 남음",
             isRepeat = true,
@@ -95,7 +96,7 @@ class TaskViewModel(
             created = Date(makeTimeFrom(Date(), day = -2))
         ),
         Task(
-            id = "2",
+            id = "6",
             category = Category.random(),
             name = "오늘",
             isRepeat = true,
@@ -104,7 +105,7 @@ class TaskViewModel(
             created = Date(makeTimeFrom(Date(), day = -2))
         ),
         Task(
-            id = "1",
+            id = "7",
             category = Category.random(),
             name = "기한 지남",
             isRepeat = true,
@@ -113,6 +114,8 @@ class TaskViewModel(
             created = Date(makeTimeFrom(Date(), day = -2))
         )
     )
+
+    private val completedTasks: MutableList<Task> = mutableListOf()
 
     sealed class State {
         object Loading : State()
@@ -135,10 +138,17 @@ class TaskViewModel(
     }
 
     fun loadCompleted() = viewModelScope.launch {
+        completedTasks.clear()
+        completedTasks.addAll(repository.loadCompletedTasks().takeIf { it.isNotEmpty() }
+            ?: completedMockData)
+
+        loadCompletedTasks()
+    }
+
+    private suspend fun loadCompletedTasks() {
         _state.postValue(
             Success(
-                tasks = repository.loadCompletedTasks().takeIf { it.isNotEmpty() }
-                    ?: completedMockData,
+                tasks = completedTasks.toList(),
                 categories = repository.loadCategories()
             )
         )
@@ -165,8 +175,24 @@ class TaskViewModel(
         period = (1..14).random() * 86400000L
     )
 
-    fun onClickDeleteTask(taskEntity: Task) = viewModelScope.launch {
-        repository.deleteTask(taskEntity)
+    fun deleteTasks() = viewModelScope.launch {
+        //        repository.deleteTasks()
+        Log.e("asdf", "Deletion candidates: ")
+        completedTasks
+            .filter { it.isSelected }
+            .forEach {
+                Log.e("asdf", it.toString())
+            }
+
+        loadCompletedTasks()
+    }
+
+    fun resetSelections() {
+        completedTasks.forEach { task ->
+            task.isSelected = false
+        }
+
+        _state.postValue(Success(tasks = completedTasks.toList()))
     }
 
     fun deleteAll() = viewModelScope.launch {
@@ -184,6 +210,16 @@ class TaskViewModel(
 
     fun onClickCompleted() {
         _showingType.postValue(ShowingType.COMPLETED)
+    }
+
+    fun onClickCompletedTask(task: Task) {
+        completedTasks
+            .find { target -> target.id == task.id }
+            ?.run {
+                isSelected = !isSelected
+            }
+
+        _state.postValue(Success(tasks = completedTasks.toList()))
     }
 
     fun onClickSort() {
