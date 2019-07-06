@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/main_profile"
+        android:title="@string/menu_profile" />
+
+    <item
+        android:id="@+id/main_task"
+        android:title="@string/menu_task" />
+
+    <item
+        android:id="@+id/main_report"
+        android:title="@string/menu_report" />
+
+    <item
+        android:id="@+id/main_settings"
+        android:title="@string/menu_settings" />
+
+</menu>
