@@ -4,16 +4,25 @@
     <color name="colorPrimaryDark">#D8D8D8</color>
     <color name="colorAccent">#FA7268</color>
 
-    <color name="dark_gray">#C4C4C4</color>
-
-    <color name="progress_background">#E5FBFF</color>
-
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
 
-    <color name="cool_black">#2B2B2B</color>
-    <color name="light_black">#4D4D4D</color>
-    <color name="warm_white">#FFFDFB</color>
+    <color name="true_blue">#0074E1</color>
+    <color name="dodger_blue">#1BACFF</color>
+    <color name="bright_turquoise">#10E7DC</color>
+    <color name="ferrari_red">#F32A00</color>
+    <color name="bubbles">#E5FBFF</color>
 
-    <color name="rough_white">#EEEEEE</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="text_primary">#000000</color>
+    <color name="text_primary_85">#D9000000</color>
+    <color name="text_primary_16">#28000000</color>
+
+    <color name="text_secondary">#34495E</color>
+    <color name="text_secondary_56">#8F34495E</color>
+
+    <color name="progress_background">#E5FBFF</color>
+
+    <color name="dark_gray">#C4C4C4</color>
+
 </resources>

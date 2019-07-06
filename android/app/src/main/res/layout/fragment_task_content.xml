@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/content_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:showIn="@layout/fragment_task_layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/header_content_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/clear_db_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="invalidate"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/task_title_completed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/task_title_todo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/task_todo"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/task_title_divider"
+                android:layout_width="2dp"
+                android:layout_height="24dp"
+                android:background="@color/text_primary_16"
+                app:layout_constraintBottom_toBottomOf="@+id/task_title_todo"
+                app:layout_constraintStart_toEndOf="@+id/task_title_todo"
+                app:layout_constraintTop_toTopOf="@+id/task_title_todo" />
+
+            <TextView
+                android:id="@+id/task_title_completed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/task_completed"
+                android:textColor="@color/text_primary_16"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/task_title_todo"
+                app:layout_constraintStart_toEndOf="@+id/task_title_divider"
+                app:layout_constraintTop_toTopOf="@+id/task_title_todo" />
+
+            <Spinner
+                android:id="@+id/category_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="@+id/task_title_todo"
+                app:layout_constraintTop_toBottomOf="@+id/task_title_todo" />
+
+            <Button
+                android:id="@+id/select_all_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="24dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="8dp"
+                android:text="@string/task_select_all"
+                android:textColor="@color/true_blue"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/category_spinner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/category_spinner" />
+
+            <Button
+                android:id="@+id/sort_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/task_filter_dday"
+                android:textColor="@color/text_secondary_56"
+                android:textSize="12sp"
+                app:icon="@drawable/ic_filter"
+                app:iconTint="#34495E"
+                app:layout_constraintBottom_toBottomOf="@+id/category_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/category_spinner" />
+
+            <Button
+                android:id="@+id/edit_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/task_edit"
+                android:textColor="@color/true_blue"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/category_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/category_spinner" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/task_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header_content_container"
+            tools:listitem="@layout/item_task_todo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

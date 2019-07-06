@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:background="@color/cool_black"
+    android:background="@color/text_primary_85"
     android:orientation="vertical">
 
     <TextView
@@ -13,6 +13,6 @@
         android:gravity="center"
         android:text="House Manager"
         android:textAllCaps="true"
-        android:textColor="@color/warm_white" />
+        android:textColor="@color/surface" />
 
 </FrameLayout>

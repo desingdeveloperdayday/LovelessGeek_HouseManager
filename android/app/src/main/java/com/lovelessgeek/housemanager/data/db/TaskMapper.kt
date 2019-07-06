@@ -8,7 +8,12 @@ object TaskMapper : Mapper<Task, TaskEntity> {
             id = item.id,
             name = item.name,
             category = item.category,
-            time = item.time
+            time = item.time,
+            isComplete = item.isComplete,
+            isRepeat = item.isRepeat,
+            period = item.period,
+            created = item.created,
+            completed = item.completed
         )
     }
 
@@ -18,7 +23,12 @@ object TaskMapper : Mapper<Task, TaskEntity> {
             id = entity.id,
             category = entity.category,
             name = entity.name,
-            time = entity.time
+            time = entity.time,
+            isComplete = entity.isComplete,
+            isRepeat = entity.isRepeat,
+            period = entity.period,
+            created = entity.created,
+            completed = entity.completed
         )
     }
 }

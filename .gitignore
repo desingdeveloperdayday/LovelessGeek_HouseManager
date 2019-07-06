@@ -79,3 +79,6 @@ proguard/
 output.json
 
 !.idea/codeStyles
+
+# kotlintest
+.kotlintest
